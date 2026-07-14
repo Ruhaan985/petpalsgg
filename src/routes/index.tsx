@@ -247,3 +247,88 @@ function Index() {
     </div>
   );
 }
+
+function EnquirySection() {
+  const [form, setForm] = useState({ name: "", email: "", phone: "", pet_name: "", message: "" });
+  const [busy, setBusy] = useState(false);
+
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setBusy(true);
+    const { error } = await supabase.from("enquiries").insert({
+      name: form.name,
+      email: form.email,
+      phone: form.phone || null,
+      pet_name: form.pet_name || null,
+      message: form.message || null,
+    });
+    setBusy(false);
+    if (error) {
+      toast.error("Couldn't send enquiry", { description: error.message });
+      return;
+    }
+    toast.success("Enquiry booked!", { description: "We'll be in touch within 2 days." });
+    setForm({ name: "", email: "", phone: "", pet_name: "", message: "" });
+  };
+
+  const field = "w-full rounded-xl border border-input bg-background px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-ring/30";
+
+  return (
+    <section id="enquiry" className="mx-auto max-w-7xl px-6 py-20">
+      <div className="grid gap-10 rounded-[2.5rem] border border-border bg-card p-8 md:p-14 lg:grid-cols-2">
+        <div>
+          <span className="inline-block rounded-full bg-secondary px-3 py-1 text-xs font-bold uppercase tracking-wider text-secondary-foreground">
+            Enquiry booking
+          </span>
+          <h2 className="mt-5 font-display text-4xl font-bold md:text-5xl">
+            Interested? Let's talk.
+          </h2>
+          <p className="mt-4 text-lg text-muted-foreground">
+            We're not selling online yet — book an enquiry and one of the founders
+            will reach out with a demo, price, and next steps within 2 days.
+          </p>
+          <ul className="mt-6 space-y-3 text-sm">
+            {["Personal reply from a founder", "Optional in-person demo", "No pressure, no spam"].map((b) => (
+              <li key={b} className="flex items-center gap-2">
+                <span className="grid h-5 w-5 place-items-center rounded-full bg-secondary text-primary">✓</span>
+                {b}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <form onSubmit={submit} className="space-y-4">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label className="mb-1.5 block text-sm font-semibold">Your name*</label>
+              <input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={field} />
+            </div>
+            <div>
+              <label className="mb-1.5 block text-sm font-semibold">Email*</label>
+              <input type="email" required value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className={field} />
+            </div>
+            <div>
+              <label className="mb-1.5 block text-sm font-semibold">Phone</label>
+              <input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className={field} />
+            </div>
+            <div>
+              <label className="mb-1.5 block text-sm font-semibold">Pet's name</label>
+              <input value={form.pet_name} onChange={(e) => setForm({ ...form, pet_name: e.target.value })} className={field} />
+            </div>
+          </div>
+          <div>
+            <label className="mb-1.5 block text-sm font-semibold">Tell us about your pup</label>
+            <textarea rows={4} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className={field} />
+          </div>
+          <button
+            type="submit"
+            disabled={busy}
+            className="w-full rounded-full bg-primary py-3.5 text-sm font-bold text-primary-foreground shadow-pop hover:opacity-90 disabled:opacity-60"
+          >
+            {busy ? "Sending…" : "Book enquiry"}
+          </button>
+        </form>
+      </div>
+    </section>
+  );
+}
