@@ -151,7 +151,7 @@ function Index() {
         </div>
       </section>
 
-      {/* PRODUCT */}
+      {/* PRODUCT + ENQUIRY */}
       <section id="product" className="mx-auto max-w-7xl px-6 py-20">
         <div className="grid items-center gap-12 rounded-[2.5rem] bg-gradient-hero p-8 text-primary-foreground shadow-pop md:p-14 lg:grid-cols-2">
           <div className="relative">
@@ -177,60 +177,57 @@ function Index() {
               A 6ft reflective-yellow lead with a snap-on purple tracker. Set up
               in 90 seconds, tracked on your phone forever.
             </p>
-            <div className="mt-8 flex items-end gap-4">
-              <div className="font-display text-6xl font-extrabold">$129</div>
-              <div className="pb-2 text-sm text-primary-foreground/70 line-through">$159</div>
-            </div>
-            <ul className="mt-6 space-y-2 text-sm">
-              {["Free shipping", "30-day returns", "2-year warranty", "No monthly fees for year one"].map((b) => (
+            <ul className="mt-8 space-y-2 text-sm">
+              {["Free demo on request", "2-day return window", "2-year warranty", "No monthly fees for year one"].map((b) => (
                 <li key={b} className="flex items-center gap-2">
                   <span className="grid h-5 w-5 place-items-center rounded-full bg-secondary text-primary">✓</span>
                   {b}
                 </li>
               ))}
             </ul>
-            <button
-              onClick={() =>
-                toast.success("Added to cart!", { description: "PetPals GPS Tracker Leash × 1" })
-              }
+            <a
+              href="#enquiry"
               className="mt-8 inline-flex items-center gap-2 rounded-full bg-secondary px-8 py-4 text-base font-bold text-secondary-foreground shadow-yellow hover:opacity-90"
             >
-              Add to cart — $129 <ArrowRight className="h-4 w-4" />
-            </button>
+              Book an enquiry <ArrowRight className="h-4 w-4" />
+            </a>
           </div>
         </div>
       </section>
+
+      <EnquirySection />
 
       {/* TEAM */}
       <section id="team" className="mx-auto max-w-7xl px-6 py-20">
         <div className="rounded-[2.5rem] border border-border bg-card p-10 md:p-14">
           <div className="max-w-2xl">
             <h2 className="font-display text-4xl font-bold md:text-5xl">
-              Built by dog people, for dog people.
+              Built by students, for dog lovers.
             </h2>
             <p className="mt-4 text-lg text-muted-foreground">
-              We're a small team of engineers, designers, and — most importantly —
-              seven very good dogs. Every leash is tested on real walks before it
-              ships.
+              PetPals is a student-led project. Three individual founders,
+              stitching hardware, software, and a lot of dog treats together
+              between lectures.
             </p>
           </div>
           <div className="mt-10 grid gap-6 sm:grid-cols-3">
             {[
-              { name: "Maya & Biscuit", role: "Co-founder / CEO" },
-              { name: "Theo & Juno", role: "Head of Hardware" },
-              { name: "Sana & Pepper", role: "Head of App" },
+              { role: "Founder — Hardware" },
+              { role: "Founder — App & Design" },
+              { role: "Founder — Operations" },
             ].map((m) => (
-              <div key={m.name} className="rounded-2xl bg-gradient-soft p-6">
-                <div className="grid h-14 w-14 place-items-center rounded-2xl bg-primary font-display text-xl font-bold text-primary-foreground">
-                  {m.name[0]}
+              <div key={m.role} className="rounded-2xl bg-gradient-soft p-6">
+                <div className="grid h-14 w-14 place-items-center rounded-2xl bg-primary text-primary-foreground">
+                  <GraduationCap className="h-7 w-7" />
                 </div>
-                <div className="mt-4 font-bold">{m.name}</div>
+                <div className="mt-4 font-bold">Student Founder</div>
                 <div className="text-sm text-muted-foreground">{m.role}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
+
 
       {/* FOOTER */}
       <footer className="border-t border-border">
