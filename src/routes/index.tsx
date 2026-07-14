@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { MapPin, Battery, ShieldCheck, Waves, ArrowRight, GraduationCap } from "lucide-react";
-import { useState } from "react";
+import { MapPin, Battery, ShieldCheck, Waves, ArrowRight, GraduationCap, Shield } from "lucide-react";
+import { useEffect, useState } from "react";
 import heroDog from "@/assets/hero-dog.jpg";
 import productLeash from "@/assets/product-leash.jpg";
 import { supabase } from "@/integrations/supabase/client";
@@ -13,6 +13,13 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const { user } = useAuth();
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    if (!user) { setIsAdmin(false); return; }
+    supabase.rpc("has_role", { _user_id: user.id, _role: "admin" })
+      .then(({ data }) => setIsAdmin(!!data));
+  }, [user]);
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
@@ -41,6 +48,14 @@ function Index() {
               <span className="hidden text-sm text-muted-foreground sm:inline">
                 Hi, {user.email?.split("@")[0]}
               </span>
+              {isAdmin && (
+                <Link
+                  to="/admin"
+                  className="inline-flex items-center gap-1.5 rounded-full bg-secondary px-4 py-2 text-sm font-bold text-secondary-foreground shadow-pop hover:opacity-90"
+                >
+                  <Shield className="h-4 w-4" /> Admin
+                </Link>
+              )}
               <button
                 onClick={handleSignOut}
                 className="rounded-full border border-primary/20 bg-white px-4 py-2 text-sm font-semibold hover:bg-accent"
@@ -63,11 +78,7 @@ function Index() {
       <section className="mx-auto max-w-7xl px-6 pt-8 pb-20">
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <div>
-            <span className="inline-flex items-center gap-2 rounded-full bg-secondary px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-secondary-foreground">
-              <span className="h-2 w-2 rounded-full bg-primary" />
-              Now shipping worldwide
-            </span>
-            <h1 className="mt-6 font-display text-5xl font-extrabold leading-[1.05] text-foreground md:text-7xl">
+            <h1 className="mt-2 font-display text-5xl font-extrabold leading-[1.05] text-foreground md:text-7xl">
               Never lose sight of your{" "}
               <span className="text-primary">best friend</span>{" "}
               again.
