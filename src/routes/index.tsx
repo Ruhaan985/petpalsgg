@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { MapPin, Battery, ShieldCheck, Waves, ArrowRight } from "lucide-react";
+import { MapPin, Battery, ShieldCheck, Waves, ArrowRight, GraduationCap } from "lucide-react";
+import { useState } from "react";
 import heroDog from "@/assets/hero-dog.jpg";
 import productLeash from "@/assets/product-leash.jpg";
 import { supabase } from "@/integrations/supabase/client";
@@ -31,6 +32,7 @@ function Index() {
         <nav className="hidden items-center gap-8 text-sm font-medium md:flex">
           <a href="#product" className="hover:text-primary">Product</a>
           <a href="#features" className="hover:text-primary">Features</a>
+          <a href="#enquiry" className="hover:text-primary">Enquiry</a>
           <a href="#team" className="hover:text-primary">Team</a>
         </nav>
         <div className="flex items-center gap-3">
@@ -77,10 +79,10 @@ function Index() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a
-                href="#product"
+                href="#enquiry"
                 className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-base font-semibold text-primary-foreground shadow-pop hover:opacity-90"
               >
-                Shop the leash <ArrowRight className="h-4 w-4" />
+                Book an enquiry <ArrowRight className="h-4 w-4" />
               </a>
               <a
                 href="#features"
@@ -90,9 +92,9 @@ function Index() {
               </a>
             </div>
             <div className="mt-10 flex items-center gap-6 text-sm text-muted-foreground">
-              <div><span className="font-display text-2xl font-bold text-primary">4.9★</span> 2,400+ reviews</div>
+              <div><span className="font-display text-2xl font-bold text-primary">4.9★</span> early tester rating</div>
               <div className="h-8 w-px bg-border" />
-              <div><span className="font-display text-2xl font-bold text-primary">30d</span> free returns</div>
+              <div><span className="font-display text-2xl font-bold text-primary">2d</span> return window</div>
             </div>
           </div>
 
@@ -150,7 +152,7 @@ function Index() {
         </div>
       </section>
 
-      {/* PRODUCT */}
+      {/* PRODUCT + ENQUIRY */}
       <section id="product" className="mx-auto max-w-7xl px-6 py-20">
         <div className="grid items-center gap-12 rounded-[2.5rem] bg-gradient-hero p-8 text-primary-foreground shadow-pop md:p-14 lg:grid-cols-2">
           <div className="relative">
@@ -176,60 +178,57 @@ function Index() {
               A 6ft reflective-yellow lead with a snap-on purple tracker. Set up
               in 90 seconds, tracked on your phone forever.
             </p>
-            <div className="mt-8 flex items-end gap-4">
-              <div className="font-display text-6xl font-extrabold">$129</div>
-              <div className="pb-2 text-sm text-primary-foreground/70 line-through">$159</div>
-            </div>
-            <ul className="mt-6 space-y-2 text-sm">
-              {["Free shipping", "30-day returns", "2-year warranty", "No monthly fees for year one"].map((b) => (
+            <ul className="mt-8 space-y-2 text-sm">
+              {["Free demo on request", "2-day return window", "2-year warranty", "No monthly fees for year one"].map((b) => (
                 <li key={b} className="flex items-center gap-2">
                   <span className="grid h-5 w-5 place-items-center rounded-full bg-secondary text-primary">✓</span>
                   {b}
                 </li>
               ))}
             </ul>
-            <button
-              onClick={() =>
-                toast.success("Added to cart!", { description: "PetPals GPS Tracker Leash × 1" })
-              }
+            <a
+              href="#enquiry"
               className="mt-8 inline-flex items-center gap-2 rounded-full bg-secondary px-8 py-4 text-base font-bold text-secondary-foreground shadow-yellow hover:opacity-90"
             >
-              Add to cart — $129 <ArrowRight className="h-4 w-4" />
-            </button>
+              Book an enquiry <ArrowRight className="h-4 w-4" />
+            </a>
           </div>
         </div>
       </section>
+
+      <EnquirySection />
 
       {/* TEAM */}
       <section id="team" className="mx-auto max-w-7xl px-6 py-20">
         <div className="rounded-[2.5rem] border border-border bg-card p-10 md:p-14">
           <div className="max-w-2xl">
             <h2 className="font-display text-4xl font-bold md:text-5xl">
-              Built by dog people, for dog people.
+              Built by students, for dog lovers.
             </h2>
             <p className="mt-4 text-lg text-muted-foreground">
-              We're a small team of engineers, designers, and — most importantly —
-              seven very good dogs. Every leash is tested on real walks before it
-              ships.
+              PetPals is a student-led project. Three individual founders,
+              stitching hardware, software, and a lot of dog treats together
+              between lectures.
             </p>
           </div>
           <div className="mt-10 grid gap-6 sm:grid-cols-3">
             {[
-              { name: "Maya & Biscuit", role: "Co-founder / CEO" },
-              { name: "Theo & Juno", role: "Head of Hardware" },
-              { name: "Sana & Pepper", role: "Head of App" },
+              { role: "Founder — Hardware" },
+              { role: "Founder — App & Design" },
+              { role: "Founder — Operations" },
             ].map((m) => (
-              <div key={m.name} className="rounded-2xl bg-gradient-soft p-6">
-                <div className="grid h-14 w-14 place-items-center rounded-2xl bg-primary font-display text-xl font-bold text-primary-foreground">
-                  {m.name[0]}
+              <div key={m.role} className="rounded-2xl bg-gradient-soft p-6">
+                <div className="grid h-14 w-14 place-items-center rounded-2xl bg-primary text-primary-foreground">
+                  <GraduationCap className="h-7 w-7" />
                 </div>
-                <div className="mt-4 font-bold">{m.name}</div>
+                <div className="mt-4 font-bold">Student Founder</div>
                 <div className="text-sm text-muted-foreground">{m.role}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
+
 
       {/* FOOTER */}
       <footer className="border-t border-border">
@@ -246,5 +245,90 @@ function Index() {
         </div>
       </footer>
     </div>
+  );
+}
+
+function EnquirySection() {
+  const [form, setForm] = useState({ name: "", email: "", phone: "", pet_name: "", message: "" });
+  const [busy, setBusy] = useState(false);
+
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setBusy(true);
+    const { error } = await supabase.from("enquiries").insert({
+      name: form.name,
+      email: form.email,
+      phone: form.phone || null,
+      pet_name: form.pet_name || null,
+      message: form.message || null,
+    });
+    setBusy(false);
+    if (error) {
+      toast.error("Couldn't send enquiry", { description: error.message });
+      return;
+    }
+    toast.success("Enquiry booked!", { description: "We'll be in touch within 2 days." });
+    setForm({ name: "", email: "", phone: "", pet_name: "", message: "" });
+  };
+
+  const field = "w-full rounded-xl border border-input bg-background px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-ring/30";
+
+  return (
+    <section id="enquiry" className="mx-auto max-w-7xl px-6 py-20">
+      <div className="grid gap-10 rounded-[2.5rem] border border-border bg-card p-8 md:p-14 lg:grid-cols-2">
+        <div>
+          <span className="inline-block rounded-full bg-secondary px-3 py-1 text-xs font-bold uppercase tracking-wider text-secondary-foreground">
+            Enquiry booking
+          </span>
+          <h2 className="mt-5 font-display text-4xl font-bold md:text-5xl">
+            Interested? Let's talk.
+          </h2>
+          <p className="mt-4 text-lg text-muted-foreground">
+            We're not selling online yet — book an enquiry and one of the founders
+            will reach out with a demo, price, and next steps within 2 days.
+          </p>
+          <ul className="mt-6 space-y-3 text-sm">
+            {["Personal reply from a founder", "Optional in-person demo", "No pressure, no spam"].map((b) => (
+              <li key={b} className="flex items-center gap-2">
+                <span className="grid h-5 w-5 place-items-center rounded-full bg-secondary text-primary">✓</span>
+                {b}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <form onSubmit={submit} className="space-y-4">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label className="mb-1.5 block text-sm font-semibold">Your name*</label>
+              <input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={field} />
+            </div>
+            <div>
+              <label className="mb-1.5 block text-sm font-semibold">Email*</label>
+              <input type="email" required value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className={field} />
+            </div>
+            <div>
+              <label className="mb-1.5 block text-sm font-semibold">Phone</label>
+              <input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className={field} />
+            </div>
+            <div>
+              <label className="mb-1.5 block text-sm font-semibold">Pet's name</label>
+              <input value={form.pet_name} onChange={(e) => setForm({ ...form, pet_name: e.target.value })} className={field} />
+            </div>
+          </div>
+          <div>
+            <label className="mb-1.5 block text-sm font-semibold">Tell us about your pup</label>
+            <textarea rows={4} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className={field} />
+          </div>
+          <button
+            type="submit"
+            disabled={busy}
+            className="w-full rounded-full bg-primary py-3.5 text-sm font-bold text-primary-foreground shadow-pop hover:opacity-90 disabled:opacity-60"
+          >
+            {busy ? "Sending…" : "Book enquiry"}
+          </button>
+        </form>
+      </div>
+    </section>
   );
 }
