@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { MapPin, Battery, ShieldCheck, Waves, ArrowRight } from "lucide-react";
+import { MapPin, Battery, ShieldCheck, Waves, ArrowRight, GraduationCap } from "lucide-react";
+import { useState } from "react";
 import heroDog from "@/assets/hero-dog.jpg";
 import productLeash from "@/assets/product-leash.jpg";
 import { supabase } from "@/integrations/supabase/client";
