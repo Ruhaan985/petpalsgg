@@ -32,6 +32,7 @@ function Index() {
         <nav className="hidden items-center gap-8 text-sm font-medium md:flex">
           <a href="#product" className="hover:text-primary">Product</a>
           <a href="#features" className="hover:text-primary">Features</a>
+          <a href="#enquiry" className="hover:text-primary">Enquiry</a>
           <a href="#team" className="hover:text-primary">Team</a>
         </nav>
         <div className="flex items-center gap-3">
