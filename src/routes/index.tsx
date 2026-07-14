@@ -78,10 +78,10 @@ function Index() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a
-                href="#product"
+                href="#enquiry"
                 className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-base font-semibold text-primary-foreground shadow-pop hover:opacity-90"
               >
-                Shop the leash <ArrowRight className="h-4 w-4" />
+                Book an enquiry <ArrowRight className="h-4 w-4" />
               </a>
               <a
                 href="#features"
@@ -91,9 +91,9 @@ function Index() {
               </a>
             </div>
             <div className="mt-10 flex items-center gap-6 text-sm text-muted-foreground">
-              <div><span className="font-display text-2xl font-bold text-primary">4.9★</span> 2,400+ reviews</div>
+              <div><span className="font-display text-2xl font-bold text-primary">4.9★</span> early tester rating</div>
               <div className="h-8 w-px bg-border" />
-              <div><span className="font-display text-2xl font-bold text-primary">30d</span> free returns</div>
+              <div><span className="font-display text-2xl font-bold text-primary">2d</span> return window</div>
             </div>
           </div>
 
