@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+
 import { MapPin, Battery, ShieldCheck, Waves, ArrowRight, GraduationCap, Shield } from "lucide-react";
 import { useEffect, useState } from "react";
 import heroDog from "@/assets/hero-dog.jpg";
