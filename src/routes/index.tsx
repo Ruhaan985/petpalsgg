@@ -119,11 +119,14 @@ function Index() {
             <div className="relative overflow-hidden rounded-[2rem] shadow-pop">
               <img
                 src={heroDog}
-                alt="Happy golden retriever wearing the PetPals yellow GPS tracker leash"
+                alt="Beagle wearing the PetPals yellow GPS tracker leash — fictional representation"
                 width={1408}
                 height={1200}
                 className="h-full w-full object-cover"
               />
+              <div className="absolute left-3 top-3 rounded-full bg-black/60 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur">
+                Fictional representation or prototype
+              </div>
             </div>
             <div className="absolute -bottom-6 -left-6 hidden rounded-2xl bg-white p-4 shadow-yellow md:block">
               <div className="flex items-center gap-3">
