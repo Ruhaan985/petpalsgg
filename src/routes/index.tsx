@@ -256,7 +256,7 @@ function Index() {
       <footer className="border-t border-border">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 py-8 text-sm text-muted-foreground md:flex-row">
           <div className="flex items-center gap-2">
-            <div className="grid h-7 w-7 place-items-center rounded-lg bg-primary text-primary-foreground font-display font-bold text-xs">P</div>
+            <img src={petpalsLogo} alt="PetPals logo" width={28} height={28} className="h-7 w-7 rounded-lg bg-white object-contain" loading="lazy" />
             <span>© {new Date().getFullYear()} PetPals. All tails wagging.</span>
           </div>
           <div className="flex gap-6">
