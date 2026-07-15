@@ -3,6 +3,7 @@ import { MapPin, Battery, ShieldCheck, Waves, ArrowRight, GraduationCap, Shield 
 import { useEffect, useState } from "react";
 import heroDog from "@/assets/hero-dog.jpg";
 import productLeash from "@/assets/product-leash.jpg";
+import petpalsLogo from "@/assets/petpals-logo.png";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/useAuth";
 import { toast } from "sonner";
@@ -31,9 +32,13 @@ function Index() {
       {/* NAV */}
       <header className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6">
         <Link to="/" className="flex items-center gap-2">
-          <div className="grid h-10 w-10 place-items-center rounded-2xl bg-primary text-primary-foreground font-display font-bold text-lg shadow-pop">
-            P
-          </div>
+          <img
+            src={petpalsLogo}
+            alt="PetPals logo"
+            width={40}
+            height={40}
+            className="h-10 w-10 rounded-2xl bg-white object-contain shadow-pop"
+          />
           <span className="font-display text-2xl font-bold text-primary">PetPals</span>
         </Link>
         <nav className="hidden items-center gap-8 text-sm font-medium md:flex">
