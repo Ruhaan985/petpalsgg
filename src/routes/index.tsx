@@ -175,15 +175,18 @@ function Index() {
       <section id="product" className="mx-auto max-w-7xl px-6 py-20">
         <div className="grid items-center gap-12 rounded-[2.5rem] bg-gradient-hero p-8 text-primary-foreground shadow-pop md:p-14 lg:grid-cols-2">
           <div className="relative">
-            <div className="overflow-hidden rounded-3xl bg-white/10 p-6 backdrop-blur">
+            <div className="relative overflow-hidden rounded-3xl bg-white/10 p-6 backdrop-blur">
               <img
                 src={productLeash}
-                alt="PetPals GPS Tracker Leash — yellow leash with purple GPS unit"
+                alt="PetPals GPS Tracker Leash — fictional representation"
                 width={1200}
                 height={1200}
                 loading="lazy"
                 className="h-full w-full object-contain"
               />
+              <div className="absolute left-4 top-4 rounded-full bg-black/60 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur">
+                Fictional representation or prototype
+              </div>
             </div>
           </div>
           <div>
