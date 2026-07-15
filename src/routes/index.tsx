@@ -3,6 +3,7 @@ import { MapPin, Battery, ShieldCheck, Waves, ArrowRight, GraduationCap, Shield 
 import { useEffect, useState } from "react";
 import heroDog from "@/assets/hero-dog.jpg";
 import productLeash from "@/assets/product-leash.jpg";
+import petpalsLogo from "@/assets/petpals-logo.png";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/useAuth";
 import { toast } from "sonner";
@@ -31,9 +32,13 @@ function Index() {
       {/* NAV */}
       <header className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6">
         <Link to="/" className="flex items-center gap-2">
-          <div className="grid h-10 w-10 place-items-center rounded-2xl bg-primary text-primary-foreground font-display font-bold text-lg shadow-pop">
-            P
-          </div>
+          <img
+            src={petpalsLogo}
+            alt="PetPals logo"
+            width={40}
+            height={40}
+            className="h-10 w-10 rounded-2xl bg-white object-contain shadow-pop"
+          />
           <span className="font-display text-2xl font-bold text-primary">PetPals</span>
         </Link>
         <nav className="hidden items-center gap-8 text-sm font-medium md:flex">
@@ -114,11 +119,14 @@ function Index() {
             <div className="relative overflow-hidden rounded-[2rem] shadow-pop">
               <img
                 src={heroDog}
-                alt="Happy golden retriever wearing the PetPals yellow GPS tracker leash"
+                alt="Beagle wearing the PetPals yellow GPS tracker leash — fictional representation"
                 width={1408}
                 height={1200}
                 className="h-full w-full object-cover"
               />
+              <div className="absolute left-3 top-3 rounded-full bg-black/60 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur">
+                Fictional representation or prototype
+              </div>
             </div>
             <div className="absolute -bottom-6 -left-6 hidden rounded-2xl bg-white p-4 shadow-yellow md:block">
               <div className="flex items-center gap-3">
@@ -167,15 +175,18 @@ function Index() {
       <section id="product" className="mx-auto max-w-7xl px-6 py-20">
         <div className="grid items-center gap-12 rounded-[2.5rem] bg-gradient-hero p-8 text-primary-foreground shadow-pop md:p-14 lg:grid-cols-2">
           <div className="relative">
-            <div className="overflow-hidden rounded-3xl bg-white/10 p-6 backdrop-blur">
+            <div className="relative overflow-hidden rounded-3xl bg-white/10 p-6 backdrop-blur">
               <img
                 src={productLeash}
-                alt="PetPals GPS Tracker Leash — yellow leash with purple GPS unit"
+                alt="PetPals GPS Tracker Leash — fictional representation"
                 width={1200}
                 height={1200}
                 loading="lazy"
                 className="h-full w-full object-contain"
               />
+              <div className="absolute left-4 top-4 rounded-full bg-black/60 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur">
+                Fictional representation or prototype
+              </div>
             </div>
           </div>
           <div>
@@ -245,7 +256,7 @@ function Index() {
       <footer className="border-t border-border">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 py-8 text-sm text-muted-foreground md:flex-row">
           <div className="flex items-center gap-2">
-            <div className="grid h-7 w-7 place-items-center rounded-lg bg-primary text-primary-foreground font-display font-bold text-xs">P</div>
+            <img src={petpalsLogo} alt="PetPals logo" width={28} height={28} className="h-7 w-7 rounded-lg bg-white object-contain" loading="lazy" />
             <span>© {new Date().getFullYear()} PetPals. All tails wagging.</span>
           </div>
           <div className="flex gap-6">
