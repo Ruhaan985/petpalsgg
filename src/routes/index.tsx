@@ -262,9 +262,10 @@ function Index() {
           </div>
           <div className="flex gap-6">
             <a href="#" className="hover:text-primary">Support</a>
-            <a href="#" className="hover:text-primary">Privacy</a>
+            <Link to="/privacy" className="hover:text-primary">Privacy</Link>
             <Link to="/terms" className="hover:text-primary">Terms</Link>
           </div>
+
         </div>
       </footer>
     </div>
