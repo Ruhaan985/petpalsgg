@@ -31,8 +31,8 @@ function TermsPage() {
           </p>
 
           <div className="mt-8 rounded-2xl bg-accent p-5 text-sm">
-            <p className="font-semibold text-primary">Important</p>
-            <p className="mt-1 text-muted-foreground">
+            <p className="font-semibold text-accent-foreground">Important</p>
+            <p className="mt-1 text-accent-foreground/80">
               PetPals is currently a <strong>prebooking-only website</strong>. No products
               are sold, shipped, or paid for through this site. Submitting an enquiry
               simply reserves your interest — it does not create a sale, contract, or

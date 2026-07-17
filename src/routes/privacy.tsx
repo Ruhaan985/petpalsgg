@@ -31,8 +31,8 @@ function PrivacyPage() {
           </p>
 
           <div className="mt-8 rounded-2xl bg-accent p-5 text-sm">
-            <p className="font-semibold text-primary">Summary</p>
-            <p className="mt-1 text-muted-foreground">
+            <p className="font-semibold text-accent-foreground">Summary</p>
+            <p className="mt-1 text-accent-foreground/80">
               PetPals is a student-led, prebooking-only website. We collect only the
               information we need to reply to your enquiry, and we never sell it.
             </p>

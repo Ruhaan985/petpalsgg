@@ -155,9 +155,9 @@ function AdminPage() {
                       <span
                         className={`rounded-full px-3 py-0.5 text-xs font-bold uppercase ${
                           e.status === "accepted"
-                            ? "bg-green-100 text-green-800"
+                            ? "bg-success text-success-foreground"
                             : e.status === "declined"
-                            ? "bg-red-100 text-red-800"
+                            ? "bg-destructive text-destructive-foreground"
                             : "bg-secondary text-secondary-foreground"
                         }`}
                       >
@@ -224,7 +224,7 @@ function AdminPage() {
                     </td>
                     <td className="px-4 py-3">
                       {a.email_confirmed_at ? (
-                        <span className="rounded-full bg-green-100 px-2 py-0.5 text-xs font-bold text-green-800">Yes</span>
+                        <span className="rounded-full bg-success px-2 py-0.5 text-xs font-bold text-success-foreground">Yes</span>
                       ) : (
                         <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-bold text-muted-foreground">No</span>
                       )}

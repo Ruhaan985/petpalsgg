@@ -49,13 +49,13 @@ function AuthPage() {
   return (
     <div className="grid min-h-screen bg-gradient-soft lg:grid-cols-2">
       {/* LEFT: brand panel */}
-      <div className="relative hidden overflow-hidden bg-gradient-hero p-12 text-primary-foreground lg:flex lg:flex-col lg:justify-between">
+      <div className="relative hidden overflow-hidden bg-gradient-hero p-12 text-foreground lg:flex lg:flex-col lg:justify-between">
         <Link to="/" className="inline-flex items-center gap-2 text-sm font-semibold opacity-90 hover:opacity-100">
           <ArrowLeft className="h-4 w-4" /> Back to PetPals
         </Link>
         <div>
           <div className="mb-6 inline-flex items-center gap-2">
-            <div className="grid h-12 w-12 place-items-center rounded-2xl bg-secondary text-secondary-foreground font-display text-xl font-bold">
+            <div className="grid h-12 w-12 place-items-center rounded-2xl bg-primary text-primary-foreground font-display text-xl font-bold">
               P
             </div>
             <span className="font-display text-3xl font-bold">PetPals</span>
@@ -63,7 +63,7 @@ function AuthPage() {
           <h1 className="font-display text-5xl font-extrabold leading-tight">
             Your dog's second-favorite login.
           </h1>
-          <p className="mt-4 max-w-md text-primary-foreground/85">
+          <p className="mt-4 max-w-md text-foreground/85">
             A PetPals account unlocks live GPS tracking, walk history, and safe-zone alerts for every leash in your pack.
           </p>
         </div>
