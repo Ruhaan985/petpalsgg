@@ -1,9 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
-import { MapPin, Battery, ShieldCheck, Waves, ArrowRight, GraduationCap, Shield } from "lucide-react";
+import { ArrowRight, GraduationCap, Shield, BookOpen, Utensils, Leaf } from "lucide-react";
 import { useEffect, useState } from "react";
 import heroDog from "@/assets/hero-dog.jpg";
-import productLeash from "@/assets/product-leash.jpg";
+import productHandbook from "@/assets/product-handbook.jpg";
+import productBowl from "@/assets/product-bowl.jpg";
 import petpalsLogo from "@/assets/petpals-logo.png";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/useAuth";
@@ -12,6 +13,27 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/")({
   component: Index,
 });
+
+const PRODUCTS = [
+  {
+    id: "handbook",
+    name: "PetPals Handbook",
+    tagline: "A quiet guide to a happy pet.",
+    body: "A hand-bound care handbook covering nutrition, routines, gentle training and first-aid — written for new pet parents by students who obsess over the small details.",
+    image: productHandbook,
+    icon: BookOpen,
+    meta: ["148 pages", "Linen hardcover", "Illustrated"],
+  },
+  {
+    id: "bowl",
+    name: "Safe Eating Bowl",
+    tagline: "Portion patrol, quietly.",
+    body: "A wooden scale-base that senses portion weight and glows soft green when the meal is just right. No app, no noise — just healthier feeding, one bowl at a time.",
+    image: productBowl,
+    icon: Utensils,
+    meta: ["USB-C", "Fits any bowl", "Silent LED cue"],
+  },
+];
 
 function Index() {
   const { user } = useAuth();
@@ -25,46 +47,42 @@ function Index() {
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
-    toast.success("Signed out. See you soon!");
+    toast.success("Signed out.");
   };
 
   return (
-    <div className="min-h-screen bg-gradient-soft">
+    <div className="min-h-screen bg-background">
       {/* NAV */}
-      <header className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6">
-        <Link to="/" className="flex items-center gap-2">
+      <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
+        <Link to="/" className="flex items-center gap-2.5">
           <img
             src={petpalsLogo}
             alt="PetPals logo"
-            width={40}
-            height={40}
-            className="h-10 w-10 rounded-2xl bg-white object-contain shadow-pop"
+            width={32}
+            height={32}
+            className="h-8 w-8 rounded-lg bg-card object-contain"
           />
-          <span className="font-display text-2xl font-bold text-primary">PetPals</span>
+          <span className="font-display text-xl tracking-tight text-foreground">PetPals</span>
         </Link>
-        <nav className="hidden items-center gap-8 text-sm font-medium md:flex">
-          <a href="#product" className="hover:text-primary">Product</a>
-          <a href="#features" className="hover:text-primary">Features</a>
-          <a href="#enquiry" className="hover:text-primary">Enquiry</a>
-          <a href="#team" className="hover:text-primary">Team</a>
+        <nav className="hidden items-center gap-8 text-sm text-muted-foreground md:flex">
+          <a href="#products" className="hover:text-foreground">Products</a>
+          <a href="#story" className="hover:text-foreground">Story</a>
+          <a href="#enquiry" className="hover:text-foreground">Enquire</a>
         </nav>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           {user ? (
             <>
-              <span className="hidden text-sm text-muted-foreground sm:inline">
-                Hi, {user.email?.split("@")[0]}
-              </span>
               {isAdmin && (
                 <Link
                   to="/admin"
-                  className="inline-flex items-center gap-1.5 rounded-full bg-secondary px-4 py-2 text-sm font-bold text-secondary-foreground shadow-pop hover:opacity-90"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3.5 py-1.5 text-xs font-medium hover:bg-muted"
                 >
-                  <Shield className="h-4 w-4" /> Admin
+                  <Shield className="h-3.5 w-3.5" /> Admin
                 </Link>
               )}
               <button
                 onClick={handleSignOut}
-                className="rounded-full border border-primary/20 bg-white px-4 py-2 text-sm font-semibold hover:bg-accent"
+                className="rounded-full px-3.5 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground"
               >
                 Sign out
               </button>
@@ -72,7 +90,7 @@ function Index() {
           ) : (
             <Link
               to="/auth"
-              className="rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90"
+              className="rounded-full bg-primary px-4 py-2 text-xs font-medium text-primary-foreground hover:opacity-90"
             >
               Sign in
             </Link>
@@ -81,191 +99,148 @@ function Index() {
       </header>
 
       {/* HERO */}
-      <section className="mx-auto max-w-7xl px-6 pt-8 pb-20">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
+      <section className="mx-auto max-w-6xl px-6 pt-16 pb-24">
+        <div className="grid items-end gap-16 lg:grid-cols-[1.1fr_1fr]">
           <div>
-            <h1 className="mt-2 font-display text-5xl font-extrabold leading-[1.05] text-foreground md:text-7xl">
-              Never lose sight of your{" "}
-              <span className="text-primary">best friend</span>{" "}
-              again.
+            <div className="inline-flex items-center gap-2 rounded-full border border-border px-3 py-1 text-xs text-muted-foreground">
+              <Leaf className="h-3 w-3" /> Student-led · Prebooking only
+            </div>
+            <h1 className="mt-6 font-display text-5xl leading-[1.05] text-foreground md:text-7xl">
+              Small things,<br />
+              <em className="italic text-primary">softly considered</em>,<br />
+              for the pets we love.
             </h1>
-            <p className="mt-6 max-w-lg text-lg text-muted-foreground">
-              The PetPals GPS Tracker Leash pairs a heavy-duty yellow lead with a
-              featherlight purple GPS. Live location, walk stats, and safe-zone
-              alerts — all in one leash.
+            <p className="mt-6 max-w-md text-base text-muted-foreground">
+              PetPals is a two-piece collection — a care handbook and a
+              gentle smart bowl — designed to make everyday pet life a little
+              calmer, a little kinder.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a
                 href="#enquiry"
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-base font-semibold text-primary-foreground shadow-pop hover:opacity-90"
+                className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground hover:opacity-90"
               >
                 Book an enquiry <ArrowRight className="h-4 w-4" />
               </a>
               <a
-                href="#features"
-                className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-white px-7 py-3.5 text-base font-semibold hover:bg-accent"
+                href="#products"
+                className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-6 py-3 text-sm font-medium hover:bg-muted"
               >
-                How it works
+                View the collection
               </a>
             </div>
-            <div className="mt-10 flex items-center gap-6 text-sm text-muted-foreground">
-              <div><span className="font-display text-2xl font-bold text-primary">4.9★</span> early tester rating</div>
-              <div className="h-8 w-px bg-border" />
-              <div><span className="font-display text-2xl font-bold text-primary">2d</span> return window</div>
-            </div>
           </div>
 
           <div className="relative">
-            <div className="absolute -inset-4 rounded-[2.5rem] bg-gradient-hero opacity-20 blur-2xl" />
-            <div className="relative overflow-hidden rounded-[2rem] shadow-pop">
+            <div className="relative overflow-hidden rounded-2xl">
               <img
                 src={heroDog}
-                alt="Beagle wearing the PetPals yellow GPS tracker leash — fictional representation"
+                alt="Beagle sitting quietly on linen — fictional representation"
                 width={1408}
-                height={1200}
+                height={1408}
                 className="h-full w-full object-cover"
               />
-              <div className="absolute left-3 top-3 rounded-full bg-black/60 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur">
+              <div className="absolute bottom-3 left-3 rounded-full bg-background/80 px-2.5 py-1 text-[10px] uppercase tracking-wider text-muted-foreground backdrop-blur">
                 Fictional representation or prototype
-              </div>
-            </div>
-            <div className="absolute -bottom-6 -left-6 hidden rounded-2xl bg-white p-4 shadow-yellow md:block">
-              <div className="flex items-center gap-3">
-                <div className="grid h-10 w-10 place-items-center rounded-xl bg-secondary">
-                  <MapPin className="h-5 w-5 text-primary" />
-                </div>
-                <div>
-                  <div className="text-xs text-muted-foreground">Live location</div>
-                  <div className="font-semibold">Riverside Park</div>
-                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* FEATURES */}
-      <section id="features" className="mx-auto max-w-7xl px-6 py-20">
-        <div className="max-w-2xl">
-          <h2 className="font-display text-4xl font-bold md:text-5xl">
-            One leash. Every walk safer.
-          </h2>
-          <p className="mt-4 text-lg text-muted-foreground">
-            Everything a dog parent needs, woven into a leash you'd want to hold.
-          </p>
-        </div>
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            { icon: MapPin, title: "Real-time GPS", body: "Sub-3m accuracy with worldwide LTE-M coverage." },
-            { icon: Battery, title: "14-day battery", body: "One charge, two weeks of adventures." },
-            { icon: ShieldCheck, title: "Safe zones", body: "Get an alert the moment your pup slips the yard." },
-            { icon: Waves, title: "Waterproof", body: "IP68 rated. Splash, swim, repeat." },
-          ].map((f) => (
-            <div key={f.title} className="rounded-3xl border border-border bg-card p-6 transition hover:-translate-y-1 hover:shadow-pop">
-              <div className="grid h-12 w-12 place-items-center rounded-2xl bg-secondary">
-                <f.icon className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="mt-5 text-lg font-bold">{f.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">{f.body}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* PRODUCT + ENQUIRY */}
-      <section id="product" className="mx-auto max-w-7xl px-6 py-20">
-        <div className="grid items-center gap-12 rounded-[2.5rem] bg-gradient-hero p-8 text-primary-foreground shadow-pop md:p-14 lg:grid-cols-2">
-          <div className="relative">
-            <div className="relative overflow-hidden rounded-3xl bg-white/10 p-6 backdrop-blur">
-              <img
-                src={productLeash}
-                alt="PetPals GPS Tracker Leash — fictional representation"
-                width={1200}
-                height={1200}
-                loading="lazy"
-                className="h-full w-full object-contain"
-              />
-              <div className="absolute left-4 top-4 rounded-full bg-black/60 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur">
-                Fictional representation or prototype
-              </div>
-            </div>
-          </div>
+      {/* PRODUCTS */}
+      <section id="products" className="mx-auto max-w-6xl px-6 py-24">
+        <div className="mb-16 flex items-end justify-between gap-6">
           <div>
-            <span className="inline-block rounded-full bg-secondary px-3 py-1 text-xs font-bold uppercase tracking-wider text-secondary-foreground">
-              Signature Product
-            </span>
-            <h2 className="mt-5 font-display text-4xl font-bold md:text-6xl">
-              The GPS Tracker Leash
-            </h2>
-            <p className="mt-5 max-w-md text-lg text-primary-foreground/85">
-              A 6ft reflective-yellow lead with a snap-on purple tracker. Set up
-              in 90 seconds, tracked on your phone forever.
-            </p>
-            <ul className="mt-8 space-y-2 text-sm">
-              {["Free demo on request", "2-day return window", "2-year warranty", "No monthly fees for year one"].map((b) => (
-                <li key={b} className="flex items-center gap-2">
-                  <span className="grid h-5 w-5 place-items-center rounded-full bg-secondary text-primary">✓</span>
-                  {b}
-                </li>
-              ))}
-            </ul>
-            <a
-              href="#enquiry"
-              className="mt-8 inline-flex items-center gap-2 rounded-full bg-secondary px-8 py-4 text-base font-bold text-secondary-foreground shadow-yellow hover:opacity-90"
-            >
-              Book an enquiry <ArrowRight className="h-4 w-4" />
-            </a>
+            <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">The collection</div>
+            <h2 className="mt-3 font-display text-4xl md:text-5xl">Two objects. Everyday care.</h2>
           </div>
+          <div className="hidden text-sm text-muted-foreground md:block">02 / two pieces</div>
+        </div>
+
+        <div className="grid gap-16 md:grid-cols-2">
+          {PRODUCTS.map((p, i) => (
+            <article key={p.id} className="group">
+              <div className="relative overflow-hidden rounded-xl bg-muted">
+                <img
+                  src={p.image}
+                  alt={`${p.name} — fictional representation`}
+                  width={1200}
+                  height={1200}
+                  loading="lazy"
+                  className="aspect-square h-full w-full object-cover transition duration-700 group-hover:scale-[1.02]"
+                />
+                <div className="absolute bottom-3 left-3 rounded-full bg-background/80 px-2.5 py-1 text-[10px] uppercase tracking-wider text-muted-foreground backdrop-blur">
+                  Fictional representation or prototype
+                </div>
+              </div>
+              <div className="mt-6 flex items-start justify-between gap-4">
+                <div>
+                  <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">0{i + 1}</div>
+                  <h3 className="mt-2 font-display text-2xl text-foreground">{p.name}</h3>
+                  <p className="mt-1 text-sm italic text-muted-foreground">{p.tagline}</p>
+                </div>
+                <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-border">
+                  <p.icon className="h-4 w-4 text-primary" />
+                </div>
+              </div>
+              <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{p.body}</p>
+              <div className="mt-5 flex flex-wrap gap-2">
+                {p.meta.map((m) => (
+                  <span key={m} className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground">
+                    {m}
+                  </span>
+                ))}
+              </div>
+            </article>
+          ))}
         </div>
       </section>
 
       <EnquirySection />
 
-      {/* TEAM */}
-      <section id="team" className="mx-auto max-w-7xl px-6 py-20">
-        <div className="rounded-[2.5rem] border border-border bg-card p-10 md:p-14">
-          <div className="max-w-2xl">
-            <h2 className="font-display text-4xl font-bold md:text-5xl">
-              Built by students, for dog lovers.
-            </h2>
-            <p className="mt-4 text-lg text-muted-foreground">
-              PetPals is a student-led project. Three individual founders,
-              stitching hardware, software, and a lot of dog treats together
-              between lectures.
-            </p>
+      {/* STORY / TEAM */}
+      <section id="story" className="mx-auto max-w-6xl px-6 py-24">
+        <div className="grid gap-16 md:grid-cols-[1fr_1.2fr]">
+          <div>
+            <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Our story</div>
+            <h2 className="mt-3 font-display text-4xl md:text-5xl">Made quietly, between lectures.</h2>
           </div>
-          <div className="mt-10 grid gap-6 sm:grid-cols-3">
-            {[
-              { role: "Founder — Hardware" },
-              { role: "Founder — App & Design" },
-              { role: "Founder — Operations" },
-            ].map((m) => (
-              <div key={m.role} className="rounded-2xl bg-gradient-soft p-6">
-                <div className="grid h-14 w-14 place-items-center rounded-2xl bg-primary text-primary-foreground">
-                  <GraduationCap className="h-7 w-7" />
+          <div>
+            <p className="text-base leading-relaxed text-muted-foreground">
+              PetPals is a student-led project. Three individual founders,
+              stitching hardware, writing, and design together in the margins
+              of a semester — building only what we'd want in our own homes.
+            </p>
+            <div className="mt-10 grid gap-8 sm:grid-cols-3">
+              {[
+                { role: "Hardware" },
+                { role: "Writing & Design" },
+                { role: "Operations" },
+              ].map((m) => (
+                <div key={m.role} className="border-t border-border pt-5">
+                  <GraduationCap className="h-4 w-4 text-primary" />
+                  <div className="mt-3 text-sm font-medium">Student Founder</div>
+                  <div className="text-xs text-muted-foreground">{m.role}</div>
                 </div>
-                <div className="mt-4 font-bold">Student Founder</div>
-                <div className="text-sm text-muted-foreground">{m.role}</div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-
       {/* FOOTER */}
       <footer className="border-t border-border">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 py-8 text-sm text-muted-foreground md:flex-row">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-8 text-xs text-muted-foreground md:flex-row">
           <div className="flex items-center gap-2">
-            <img src={petpalsLogo} alt="PetPals logo" width={28} height={28} className="h-7 w-7 rounded-lg bg-white object-contain" loading="lazy" />
-            <span>© {new Date().getFullYear()} PetPals. All tails wagging.</span>
+            <img src={petpalsLogo} alt="PetPals logo" width={20} height={20} className="h-5 w-5 rounded object-contain" loading="lazy" />
+            <span>© {new Date().getFullYear()} PetPals — a student project.</span>
           </div>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-primary">Support</a>
-            <Link to="/privacy" className="hover:text-primary">Privacy</Link>
-            <Link to="/terms" className="hover:text-primary">Terms</Link>
+            <a href="#" className="hover:text-foreground">Support</a>
+            <Link to="/privacy" className="hover:text-foreground">Privacy</Link>
+            <Link to="/terms" className="hover:text-foreground">Terms</Link>
           </div>
-
         </div>
       </footer>
     </div>
@@ -274,10 +249,18 @@ function Index() {
 
 function EnquirySection() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", pet_name: "", message: "" });
+  const [items, setItems] = useState<string[]>([]);
   const [busy, setBusy] = useState(false);
+
+  const toggle = (id: string) =>
+    setItems((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (items.length === 0) {
+      toast.error("Please choose at least one item you're interested in.");
+      return;
+    }
     setBusy(true);
     const { error } = await supabase.from("enquiries").insert({
       name: form.name,
@@ -285,69 +268,99 @@ function EnquirySection() {
       phone: form.phone || null,
       pet_name: form.pet_name || null,
       message: form.message || null,
+      interested_items: items,
     });
     setBusy(false);
     if (error) {
       toast.error("Couldn't send enquiry", { description: error.message });
       return;
     }
-    toast.success("Enquiry booked!", { description: "We'll be in touch within 2 days." });
+    toast.success("Enquiry booked", { description: "We'll be in touch within 2 days." });
     setForm({ name: "", email: "", phone: "", pet_name: "", message: "" });
+    setItems([]);
   };
 
-  const field = "w-full rounded-xl border border-input bg-background px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-ring/30";
+  const field =
+    "w-full rounded-lg border border-input bg-background px-3.5 py-2.5 text-sm outline-none transition focus:border-primary focus:ring-1 focus:ring-primary";
 
   return (
-    <section id="enquiry" className="mx-auto max-w-7xl px-6 py-20">
-      <div className="grid gap-10 rounded-[2.5rem] border border-border bg-card p-8 md:p-14 lg:grid-cols-2">
+    <section id="enquiry" className="border-y border-border bg-gradient-soft">
+      <div className="mx-auto grid max-w-6xl gap-16 px-6 py-24 md:grid-cols-[1fr_1.2fr]">
         <div>
-          <span className="inline-block rounded-full bg-secondary px-3 py-1 text-xs font-bold uppercase tracking-wider text-secondary-foreground">
-            Enquiry booking
-          </span>
-          <h2 className="mt-5 font-display text-4xl font-bold md:text-5xl">
-            Interested? Let's talk.
+          <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Enquiry</div>
+          <h2 className="mt-3 font-display text-4xl md:text-5xl">
+            Interested? <em className="italic text-primary">Let's talk.</em>
           </h2>
-          <p className="mt-4 text-lg text-muted-foreground">
-            We're not selling online yet — book an enquiry and one of the founders
-            will reach out with a demo, price, and next steps within 2 days.
+          <p className="mt-5 max-w-sm text-sm text-muted-foreground">
+            We're not selling online yet. Tell us which piece you're curious
+            about and a founder will reach out within two days.
           </p>
-          <ul className="mt-6 space-y-3 text-sm">
+          <ul className="mt-8 space-y-2 text-sm text-muted-foreground">
             {["Personal reply from a founder", "Optional in-person demo", "No pressure, no spam"].map((b) => (
               <li key={b} className="flex items-center gap-2">
-                <span className="grid h-5 w-5 place-items-center rounded-full bg-secondary text-primary">✓</span>
-                {b}
+                <span className="h-1 w-1 rounded-full bg-primary" /> {b}
               </li>
             ))}
           </ul>
         </div>
 
-        <form onSubmit={submit} className="space-y-4">
+        <form onSubmit={submit} className="space-y-5">
+          <div>
+            <div className="mb-2 text-xs uppercase tracking-[0.15em] text-muted-foreground">
+              I'm interested in*
+            </div>
+            <div className="grid gap-2 sm:grid-cols-2">
+              {PRODUCTS.map((p) => {
+                const active = items.includes(p.id);
+                return (
+                  <label
+                    key={p.id}
+                    className={`flex cursor-pointer items-start gap-3 rounded-lg border p-3.5 transition ${
+                      active ? "border-primary bg-card" : "border-border bg-card/60 hover:bg-card"
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={active}
+                      onChange={() => toggle(p.id)}
+                      className="mt-0.5 h-4 w-4 accent-primary"
+                    />
+                    <div>
+                      <div className="text-sm font-medium">{p.name}</div>
+                      <div className="text-xs text-muted-foreground">{p.tagline}</div>
+                    </div>
+                  </label>
+                );
+              })}
+            </div>
+          </div>
+
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <label className="mb-1.5 block text-sm font-semibold">Your name*</label>
-              <input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={field} />
+              <label className="mb-1.5 block text-xs uppercase tracking-[0.15em] text-muted-foreground">Name*</label>
+              <input required maxLength={100} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={field} />
             </div>
             <div>
-              <label className="mb-1.5 block text-sm font-semibold">Email*</label>
-              <input type="email" required value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className={field} />
+              <label className="mb-1.5 block text-xs uppercase tracking-[0.15em] text-muted-foreground">Email*</label>
+              <input type="email" required maxLength={255} value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className={field} />
             </div>
             <div>
-              <label className="mb-1.5 block text-sm font-semibold">Phone</label>
-              <input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className={field} />
+              <label className="mb-1.5 block text-xs uppercase tracking-[0.15em] text-muted-foreground">Phone</label>
+              <input maxLength={40} value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className={field} />
             </div>
             <div>
-              <label className="mb-1.5 block text-sm font-semibold">Pet's name</label>
-              <input value={form.pet_name} onChange={(e) => setForm({ ...form, pet_name: e.target.value })} className={field} />
+              <label className="mb-1.5 block text-xs uppercase tracking-[0.15em] text-muted-foreground">Pet's name</label>
+              <input maxLength={100} value={form.pet_name} onChange={(e) => setForm({ ...form, pet_name: e.target.value })} className={field} />
             </div>
           </div>
           <div>
-            <label className="mb-1.5 block text-sm font-semibold">Tell us about your pup</label>
-            <textarea rows={4} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className={field} />
+            <label className="mb-1.5 block text-xs uppercase tracking-[0.15em] text-muted-foreground">A note</label>
+            <textarea rows={4} maxLength={2000} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className={field} />
           </div>
           <button
             type="submit"
             disabled={busy}
-            className="w-full rounded-full bg-primary py-3.5 text-sm font-bold text-primary-foreground shadow-pop hover:opacity-90 disabled:opacity-60"
+            className="w-full rounded-full bg-primary py-3 text-sm font-medium text-primary-foreground hover:opacity-90 disabled:opacity-60"
           >
             {busy ? "Sending…" : "Book enquiry"}
           </button>
