@@ -11,6 +11,11 @@ export const Route = createFileRoute("/admin")({
   component: AdminPage,
 });
 
+const ITEM_LABELS: Record<string, string> = {
+  handbook: "PetPals Handbook",
+  bowl: "Safe Eating Bowl",
+};
+
 type Enquiry = {
   id: string;
   name: string;
@@ -20,6 +25,7 @@ type Enquiry = {
   message: string | null;
   status: string;
   created_at: string;
+  interested_items: string[] | null;
 };
 
 type Account = {
@@ -163,6 +169,15 @@ function AdminPage() {
                       {e.phone && <span className="inline-flex items-center gap-1"><Phone className="h-3.5 w-3.5" /> {e.phone}</span>}
                       {e.pet_name && <span className="inline-flex items-center gap-1"><PawPrint className="h-3.5 w-3.5" /> {e.pet_name}</span>}
                     </div>
+                    {e.interested_items && e.interested_items.length > 0 && (
+                      <div className="mt-3 flex flex-wrap gap-1.5">
+                        {e.interested_items.map((it) => (
+                          <span key={it} className="rounded-full border border-border bg-background px-2.5 py-0.5 text-xs font-medium">
+                            {ITEM_LABELS[it] ?? it}
+                          </span>
+                        ))}
+                      </div>
+                    )}
                     {e.message && <p className="mt-3 text-sm">{e.message}</p>}
                     <p className="mt-3 text-xs text-muted-foreground">{new Date(e.created_at).toLocaleString()}</p>
                   </div>
