@@ -107,6 +107,7 @@ function Index() {
 
   return (
     <div className="min-h-screen bg-background">
+      <IntroOverlay />
       {/* NAV */}
       <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
         <Link to="/" className="flex items-center gap-2.5">
@@ -166,9 +167,9 @@ function Index() {
               for the pets we love.
             </h1>
             <p className="mt-6 max-w-md text-base text-muted-foreground">
-              PetPals is a two-piece collection — a care handbook and a
-              gentle smart bowl — designed to make everyday pet life a little
-              calmer, a little kinder.
+              PetPals is a three-piece collection — a care handbook, a
+              gentle smart bowl and a GPS tracker leash — designed to make
+              everyday pet life a little calmer, a little kinder.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a
@@ -208,12 +209,12 @@ function Index() {
         <div className="mb-16 flex items-end justify-between gap-6">
           <div>
             <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">The collection</div>
-            <h2 className="mt-3 font-display text-4xl md:text-5xl">Two objects. Everyday care.</h2>
+            <h2 className="mt-3 font-display text-4xl md:text-5xl">Three objects. Everyday care.</h2>
           </div>
-          <div className="hidden text-sm text-muted-foreground md:block">02 / two pieces</div>
+          <div className="hidden text-sm text-muted-foreground md:block">03 / three pieces</div>
         </div>
 
-        <div className="grid gap-16 md:grid-cols-2">
+        <div className="grid gap-16 md:grid-cols-2 lg:grid-cols-3">
           {PRODUCTS.map((p, i) => (
             <article key={p.id} className="group">
               <div className="relative overflow-hidden rounded-xl bg-muted">
