@@ -1,11 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
-import { ArrowRight, GraduationCap, Shield, BookOpen, Utensils, Leaf } from "lucide-react";
-import { useEffect, useState } from "react";
+import { ArrowRight, GraduationCap, Shield, BookOpen, Utensils, Leaf, MapPin } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import heroDog from "@/assets/hero-dog.jpg";
 import productHandbook from "@/assets/product-handbook.jpg";
 import productBowl from "@/assets/product-bowl.jpg";
+import productLeash from "@/assets/product-leash.jpg";
 import petpalsLogo from "@/assets/petpals-logo.png";
+import introVideo from "@/assets/petpals-intro.mp4.asset.json";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/useAuth";
 import { toast } from "sonner";
@@ -33,7 +35,60 @@ const PRODUCTS = [
     icon: Utensils,
     meta: ["USB-C", "Fits any bowl", "Silent LED cue"],
   },
+  {
+    id: "leash",
+    name: "GPS Tracker Leash",
+    tagline: "Every walk, quietly mapped.",
+    body: "A soft leather leash with a discreet GPS puck stitched into the handle — live location, safe-zone alerts and a two-week battery, so a wandering beagle is never really lost.",
+    image: productLeash,
+    icon: MapPin,
+    meta: ["Live GPS", "14-day battery", "Safe-zone alerts", "Weatherproof"],
+  },
 ];
+
+function IntroOverlay() {
+  const [visible, setVisible] = useState(true);
+  const [fading, setFading] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (sessionStorage.getItem("petpals-intro-seen")) {
+      setVisible(false);
+      return;
+    }
+    sessionStorage.setItem("petpals-intro-seen", "1");
+  }, []);
+
+  const dismiss = () => {
+    setFading(true);
+    setTimeout(() => setVisible(false), 600);
+  };
+
+  if (!visible) return null;
+
+  return (
+    <div
+      className={`fixed inset-0 z-[100] bg-black transition-opacity duration-500 ${fading ? "opacity-0" : "opacity-100"}`}
+    >
+      <video
+        ref={videoRef}
+        src={introVideo.url}
+        autoPlay
+        muted
+        playsInline
+        onEnded={dismiss}
+        className="h-full w-full object-cover"
+      />
+      <button
+        onClick={dismiss}
+        className="absolute bottom-6 right-6 rounded-full border border-white/30 bg-black/40 px-4 py-2 text-xs uppercase tracking-[0.2em] text-white/80 backdrop-blur hover:bg-black/60"
+      >
+        Skip intro
+      </button>
+    </div>
+  );
+}
 
 function Index() {
   const { user } = useAuth();
@@ -52,6 +107,7 @@ function Index() {
 
   return (
     <div className="min-h-screen bg-background">
+      <IntroOverlay />
       {/* NAV */}
       <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
         <Link to="/" className="flex items-center gap-2.5">
@@ -111,9 +167,9 @@ function Index() {
               for the pets we love.
             </h1>
             <p className="mt-6 max-w-md text-base text-muted-foreground">
-              PetPals is a two-piece collection — a care handbook and a
-              gentle smart bowl — designed to make everyday pet life a little
-              calmer, a little kinder.
+              PetPals is a three-piece collection — a care handbook, a
+              gentle smart bowl and a GPS tracker leash — designed to make
+              everyday pet life a little calmer, a little kinder.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a
@@ -153,12 +209,12 @@ function Index() {
         <div className="mb-16 flex items-end justify-between gap-6">
           <div>
             <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">The collection</div>
-            <h2 className="mt-3 font-display text-4xl md:text-5xl">Two objects. Everyday care.</h2>
+            <h2 className="mt-3 font-display text-4xl md:text-5xl">Three objects. Everyday care.</h2>
           </div>
-          <div className="hidden text-sm text-muted-foreground md:block">02 / two pieces</div>
+          <div className="hidden text-sm text-muted-foreground md:block">03 / three pieces</div>
         </div>
 
-        <div className="grid gap-16 md:grid-cols-2">
+        <div className="grid gap-16 md:grid-cols-2 lg:grid-cols-3">
           {PRODUCTS.map((p, i) => (
             <article key={p.id} className="group">
               <div className="relative overflow-hidden rounded-xl bg-muted">
