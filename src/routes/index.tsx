@@ -53,11 +53,11 @@ function IntroOverlay() {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    if (sessionStorage.getItem("petpals-intro-seen")) {
+    if (sessionStorage.getItem("petpals-intro-seen-v2")) {
       setVisible(false);
       return;
     }
-    sessionStorage.setItem("petpals-intro-seen", "1");
+    sessionStorage.setItem("petpals-intro-seen-v2", "1");
   }, []);
 
   const dismiss = () => {
