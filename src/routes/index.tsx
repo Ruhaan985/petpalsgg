@@ -97,6 +97,7 @@ function Index() {
           <a href="#products" className="hover:text-foreground">Products</a>
           <a href="#story" className="hover:text-foreground">Story</a>
           <a href="#enquiry" className="hover:text-foreground">Enquire</a>
+          <Link to="/faq" className="hover:text-foreground">FAQ</Link>
           <Link to="/support" className="hover:text-foreground">Support</Link>
         </nav>
         <div className="flex items-center gap-2">
@@ -110,6 +111,12 @@ function Index() {
                   <Shield className="h-3.5 w-3.5" /> Admin
                 </Link>
               )}
+              <Link
+                to="/_authenticated/my-enquiries"
+                className="hidden items-center gap-1.5 rounded-full border border-border bg-card px-3.5 py-1.5 text-xs font-medium hover:bg-muted sm:inline-flex"
+              >
+                <User className="h-3.5 w-3.5" /> My enquiries
+              </Link>
               <button
                 onClick={handleSignOut}
                 className="rounded-full px-3.5 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground"
