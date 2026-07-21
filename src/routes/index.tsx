@@ -1,50 +1,23 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
+import { useQuery } from "@tanstack/react-query";
 
-import { ArrowRight, GraduationCap, Shield, BookOpen, Utensils, Leaf, MapPin } from "lucide-react";
+import { ArrowRight, GraduationCap, Shield, Leaf, User } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import heroDog from "@/assets/hero-dog.jpg";
-import productHandbook from "@/assets/product-handbook.jpg";
-import productBowl from "@/assets/product-bowl.jpg";
-import productLeash from "@/assets/product-leash.jpg";
 import petpalsLogo from "@/assets/petpals-logo.png";
 import introVideo from "@/assets/petpals-intro.mp4.asset.json";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/useAuth";
 import { toast } from "sonner";
+import { PRODUCTS } from "@/lib/products";
+import { getEnquiryCount } from "@/lib/enquiries.functions";
 
 export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const PRODUCTS = [
-  {
-    id: "handbook",
-    name: "PetPals Handbook",
-    tagline: "A quiet guide to a happy pet.",
-    body: "A hand-bound care handbook covering nutrition, routines, gentle training and first-aid — written for new pet parents by students who obsess over the small details.",
-    image: productHandbook,
-    icon: BookOpen,
-    meta: ["148 pages", "Linen hardcover", "Illustrated"],
-  },
-  {
-    id: "bowl",
-    name: "Safe Eating Bowl",
-    tagline: "Portion patrol, quietly.",
-    body: "A wooden scale-base that senses portion weight and glows soft green when the meal is just right. No app, no noise — just healthier feeding, one bowl at a time.",
-    image: productBowl,
-    icon: Utensils,
-    meta: ["USB-C", "Fits any bowl", "Silent LED cue"],
-  },
-  {
-    id: "leash",
-    name: "GPS Tracker Leash",
-    tagline: "Every walk, quietly mapped.",
-    body: "A soft leather leash with a discreet GPS puck stitched into the handle — live location, safe-zone alerts and a two-week battery, so a wandering beagle is never really lost.",
-    image: productLeash,
-    icon: MapPin,
-    meta: ["Live GPS", "14-day battery", "Safe-zone alerts", "Weatherproof"],
-  },
-];
+// Products moved to src/lib/products.ts
 
 function IntroOverlay() {
   const [visible, setVisible] = useState(true);
