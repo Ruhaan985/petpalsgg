@@ -124,6 +124,7 @@ function Index() {
           <a href="#products" className="hover:text-foreground">Products</a>
           <a href="#story" className="hover:text-foreground">Story</a>
           <a href="#enquiry" className="hover:text-foreground">Enquire</a>
+          <Link to="/support" className="hover:text-foreground">Support</Link>
         </nav>
         <div className="flex items-center gap-2">
           {user ? (
@@ -293,7 +294,7 @@ function Index() {
             <span>© {new Date().getFullYear()} PetPals — a student project.</span>
           </div>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-foreground">Support</a>
+            <Link to="/support" className="hover:text-foreground">Support</Link>
             <Link to="/privacy" className="hover:text-foreground">Privacy</Link>
             <Link to="/terms" className="hover:text-foreground">Terms</Link>
           </div>
