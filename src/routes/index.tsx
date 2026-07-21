@@ -299,9 +299,17 @@ function Index() {
 }
 
 function EnquirySection() {
+  const { user } = useAuth();
   const [form, setForm] = useState({ name: "", email: "", phone: "", pet_name: "", message: "" });
   const [items, setItems] = useState<string[]>([]);
   const [busy, setBusy] = useState(false);
+
+  const fetchCount = useServerFn(getEnquiryCount);
+  const { data: countData } = useQuery({
+    queryKey: ["enquiry-count"],
+    queryFn: () => fetchCount(),
+    refetchOnWindowFocus: false,
+  });
 
   const toggle = (id: string) =>
     setItems((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
@@ -320,6 +328,7 @@ function EnquirySection() {
       pet_name: form.pet_name || null,
       message: form.message || null,
       interested_items: items,
+      user_id: user?.id ?? null,
     });
     setBusy(false);
     if (error) {
@@ -346,8 +355,19 @@ function EnquirySection() {
             We're not selling online yet. Tell us which piece you're curious
             about and a founder will reach out within two days.
           </p>
+          {countData && countData.count > 0 && (
+            <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-1.5 text-xs text-muted-foreground">
+              <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+              <span className="font-medium text-foreground">{countData.count.toLocaleString()}</span> {countData.count === 1 ? "person has" : "people have"} enquired so far
+            </div>
+          )}
           <ul className="mt-8 space-y-2 text-sm text-muted-foreground">
-            {["Personal reply from a founder", "Optional in-person demo", "No pressure, no spam"].map((b) => (
+            {[
+              user ? "Saved to your PetPals account" : "Sign in to track replies in one place",
+              "Personal reply from a founder",
+              "Optional in-person demo",
+              "No pressure, no spam",
+            ].map((b) => (
               <li key={b} className="flex items-center gap-2">
                 <span className="h-1 w-1 rounded-full bg-primary" /> {b}
               </li>
