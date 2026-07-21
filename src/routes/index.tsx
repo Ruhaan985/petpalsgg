@@ -1,50 +1,23 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
+import { useQuery } from "@tanstack/react-query";
 
-import { ArrowRight, GraduationCap, Shield, BookOpen, Utensils, Leaf, MapPin } from "lucide-react";
+import { ArrowRight, GraduationCap, Shield, Leaf, User } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import heroDog from "@/assets/hero-dog.jpg";
-import productHandbook from "@/assets/product-handbook.jpg";
-import productBowl from "@/assets/product-bowl.jpg";
-import productLeash from "@/assets/product-leash.jpg";
 import petpalsLogo from "@/assets/petpals-logo.png";
 import introVideo from "@/assets/petpals-intro.mp4.asset.json";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/useAuth";
 import { toast } from "sonner";
+import { PRODUCTS } from "@/lib/products";
+import { getEnquiryCount } from "@/lib/enquiries.functions";
 
 export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const PRODUCTS = [
-  {
-    id: "handbook",
-    name: "PetPals Handbook",
-    tagline: "A quiet guide to a happy pet.",
-    body: "A hand-bound care handbook covering nutrition, routines, gentle training and first-aid — written for new pet parents by students who obsess over the small details.",
-    image: productHandbook,
-    icon: BookOpen,
-    meta: ["148 pages", "Linen hardcover", "Illustrated"],
-  },
-  {
-    id: "bowl",
-    name: "Safe Eating Bowl",
-    tagline: "Portion patrol, quietly.",
-    body: "A wooden scale-base that senses portion weight and glows soft green when the meal is just right. No app, no noise — just healthier feeding, one bowl at a time.",
-    image: productBowl,
-    icon: Utensils,
-    meta: ["USB-C", "Fits any bowl", "Silent LED cue"],
-  },
-  {
-    id: "leash",
-    name: "GPS Tracker Leash",
-    tagline: "Every walk, quietly mapped.",
-    body: "A soft leather leash with a discreet GPS puck stitched into the handle — live location, safe-zone alerts and a two-week battery, so a wandering beagle is never really lost.",
-    image: productLeash,
-    icon: MapPin,
-    meta: ["Live GPS", "14-day battery", "Safe-zone alerts", "Weatherproof"],
-  },
-];
+// Products moved to src/lib/products.ts
 
 function IntroOverlay() {
   const [visible, setVisible] = useState(true);
@@ -124,6 +97,7 @@ function Index() {
           <a href="#products" className="hover:text-foreground">Products</a>
           <a href="#story" className="hover:text-foreground">Story</a>
           <a href="#enquiry" className="hover:text-foreground">Enquire</a>
+          <Link to="/faq" className="hover:text-foreground">FAQ</Link>
           <Link to="/support" className="hover:text-foreground">Support</Link>
         </nav>
         <div className="flex items-center gap-2">
@@ -137,6 +111,12 @@ function Index() {
                   <Shield className="h-3.5 w-3.5" /> Admin
                 </Link>
               )}
+              <Link
+                to="/_authenticated/my-enquiries"
+                className="hidden items-center gap-1.5 rounded-full border border-border bg-card px-3.5 py-1.5 text-xs font-medium hover:bg-muted sm:inline-flex"
+              >
+                <User className="h-3.5 w-3.5" /> My enquiries
+              </Link>
               <button
                 onClick={handleSignOut}
                 className="rounded-full px-3.5 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground"
@@ -218,7 +198,11 @@ function Index() {
         <div className="grid gap-16 md:grid-cols-2 lg:grid-cols-3">
           {PRODUCTS.map((p, i) => (
             <article key={p.id} className="group">
-              <div className="relative overflow-hidden rounded-xl bg-muted">
+              <Link
+                to="/products/$id"
+                params={{ id: p.id }}
+                className="relative block overflow-hidden rounded-xl bg-muted"
+              >
                 <img
                   src={p.image}
                   alt={`${p.name} — fictional representation`}
@@ -230,11 +214,13 @@ function Index() {
                 <div className="absolute bottom-3 left-3 rounded-full bg-background/80 px-2.5 py-1 text-[10px] uppercase tracking-wider text-muted-foreground backdrop-blur">
                   Fictional representation or prototype
                 </div>
-              </div>
+              </Link>
               <div className="mt-6 flex items-start justify-between gap-4">
                 <div>
                   <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">0{i + 1}</div>
-                  <h3 className="mt-2 font-display text-2xl text-foreground">{p.name}</h3>
+                  <Link to="/products/$id" params={{ id: p.id }}>
+                    <h3 className="mt-2 font-display text-2xl text-foreground hover:text-primary">{p.name}</h3>
+                  </Link>
                   <p className="mt-1 text-sm italic text-muted-foreground">{p.tagline}</p>
                 </div>
                 <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-border">
@@ -249,6 +235,13 @@ function Index() {
                   </span>
                 ))}
               </div>
+              <Link
+                to="/products/$id"
+                params={{ id: p.id }}
+                className="mt-5 inline-flex items-center gap-1 text-xs uppercase tracking-[0.15em] text-primary hover:opacity-80"
+              >
+                Learn more <ArrowRight className="h-3 w-3" />
+              </Link>
             </article>
           ))}
         </div>
@@ -294,6 +287,7 @@ function Index() {
             <span>© {new Date().getFullYear()} PetPals — a student project.</span>
           </div>
           <div className="flex gap-6">
+            <Link to="/faq" className="hover:text-foreground">FAQ</Link>
             <Link to="/support" className="hover:text-foreground">Support</Link>
             <Link to="/privacy" className="hover:text-foreground">Privacy</Link>
             <Link to="/terms" className="hover:text-foreground">Terms</Link>
@@ -305,9 +299,17 @@ function Index() {
 }
 
 function EnquirySection() {
+  const { user } = useAuth();
   const [form, setForm] = useState({ name: "", email: "", phone: "", pet_name: "", message: "" });
   const [items, setItems] = useState<string[]>([]);
   const [busy, setBusy] = useState(false);
+
+  const fetchCount = useServerFn(getEnquiryCount);
+  const { data: countData } = useQuery({
+    queryKey: ["enquiry-count"],
+    queryFn: () => fetchCount(),
+    refetchOnWindowFocus: false,
+  });
 
   const toggle = (id: string) =>
     setItems((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
@@ -326,6 +328,7 @@ function EnquirySection() {
       pet_name: form.pet_name || null,
       message: form.message || null,
       interested_items: items,
+      user_id: user?.id ?? null,
     });
     setBusy(false);
     if (error) {
@@ -352,8 +355,19 @@ function EnquirySection() {
             We're not selling online yet. Tell us which piece you're curious
             about and a founder will reach out within two days.
           </p>
+          {countData && countData.count > 0 && (
+            <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-1.5 text-xs text-muted-foreground">
+              <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+              <span className="font-medium text-foreground">{countData.count.toLocaleString()}</span> {countData.count === 1 ? "person has" : "people have"} enquired so far
+            </div>
+          )}
           <ul className="mt-8 space-y-2 text-sm text-muted-foreground">
-            {["Personal reply from a founder", "Optional in-person demo", "No pressure, no spam"].map((b) => (
+            {[
+              user ? "Saved to your PetPals account" : "Sign in to track replies in one place",
+              "Personal reply from a founder",
+              "Optional in-person demo",
+              "No pressure, no spam",
+            ].map((b) => (
               <li key={b} className="flex items-center gap-2">
                 <span className="h-1 w-1 rounded-full bg-primary" /> {b}
               </li>
