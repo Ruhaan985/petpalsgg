@@ -78,7 +78,7 @@ function ProductPage() {
             <p className="mt-8 text-base leading-relaxed text-muted-foreground">{product.body}</p>
 
             <ul className="mt-8 space-y-3 border-y border-border py-6">
-              {product.details.map((d) => (
+              {product.details.map((d: string) => (
                 <li key={d} className="flex gap-3 text-sm text-muted-foreground">
                   <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-primary" />
                   {d}
@@ -87,7 +87,7 @@ function ProductPage() {
             </ul>
 
             <div className="mt-8 flex flex-wrap gap-2">
-              {product.meta.map((m) => (
+              {product.meta.map((m: string) => (
                 <span key={m} className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground">{m}</span>
               ))}
             </div>
