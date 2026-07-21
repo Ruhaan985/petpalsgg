@@ -198,7 +198,11 @@ function Index() {
         <div className="grid gap-16 md:grid-cols-2 lg:grid-cols-3">
           {PRODUCTS.map((p, i) => (
             <article key={p.id} className="group">
-              <div className="relative overflow-hidden rounded-xl bg-muted">
+              <Link
+                to="/products/$id"
+                params={{ id: p.id }}
+                className="relative block overflow-hidden rounded-xl bg-muted"
+              >
                 <img
                   src={p.image}
                   alt={`${p.name} — fictional representation`}
@@ -210,11 +214,13 @@ function Index() {
                 <div className="absolute bottom-3 left-3 rounded-full bg-background/80 px-2.5 py-1 text-[10px] uppercase tracking-wider text-muted-foreground backdrop-blur">
                   Fictional representation or prototype
                 </div>
-              </div>
+              </Link>
               <div className="mt-6 flex items-start justify-between gap-4">
                 <div>
                   <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">0{i + 1}</div>
-                  <h3 className="mt-2 font-display text-2xl text-foreground">{p.name}</h3>
+                  <Link to="/products/$id" params={{ id: p.id }}>
+                    <h3 className="mt-2 font-display text-2xl text-foreground hover:text-primary">{p.name}</h3>
+                  </Link>
                   <p className="mt-1 text-sm italic text-muted-foreground">{p.tagline}</p>
                 </div>
                 <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-border">
@@ -229,6 +235,13 @@ function Index() {
                   </span>
                 ))}
               </div>
+              <Link
+                to="/products/$id"
+                params={{ id: p.id }}
+                className="mt-5 inline-flex items-center gap-1 text-xs uppercase tracking-[0.15em] text-primary hover:opacity-80"
+              >
+                Learn more <ArrowRight className="h-3 w-3" />
+              </Link>
             </article>
           ))}
         </div>
@@ -274,6 +287,7 @@ function Index() {
             <span>© {new Date().getFullYear()} PetPals — a student project.</span>
           </div>
           <div className="flex gap-6">
+            <Link to="/faq" className="hover:text-foreground">FAQ</Link>
             <Link to="/support" className="hover:text-foreground">Support</Link>
             <Link to="/privacy" className="hover:text-foreground">Privacy</Link>
             <Link to="/terms" className="hover:text-foreground">Terms</Link>
