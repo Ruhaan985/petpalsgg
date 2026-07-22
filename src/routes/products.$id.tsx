@@ -1,7 +1,9 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import petpalsLogo from "@/assets/petpals-logo.png";
 import { productById, PRODUCTS } from "@/lib/products";
-import { ArrowRight } from "lucide-react";
+import { useCart } from "@/lib/cart";
+import { toast } from "sonner";
+import { ArrowRight, ShoppingBag, Check } from "lucide-react";
 
 export const Route = createFileRoute("/products/$id")({
   loader: ({ params }) => {
@@ -42,6 +44,17 @@ function ProductPage() {
   const { product } = Route.useLoaderData();
   const Icon = product.icon;
   const others = PRODUCTS.filter((p) => p.id !== product.id);
+  const { add, has, items, hydrated } = useCart();
+  const inCart = hydrated && has(product.id);
+
+  const handleAdd = () => {
+    if (inCart) {
+      toast.info("Already in your cart.");
+      return;
+    }
+    add(product.id);
+    toast.success(`${product.name} added to cart.`);
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -50,7 +63,15 @@ function ProductPage() {
           <img src={petpalsLogo} alt="PetPals" className="h-8 w-8 rounded-lg bg-card object-contain" />
           <span className="font-display text-xl tracking-tight text-foreground">PetPals</span>
         </Link>
-        <Link to="/" className="text-xs uppercase tracking-[0.15em] text-muted-foreground hover:text-foreground">← Collection</Link>
+        <div className="flex items-center gap-3">
+          <Link to="/cart" className="relative inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3.5 py-1.5 text-xs font-medium hover:bg-muted">
+            <ShoppingBag className="h-3.5 w-3.5" /> Cart
+            {hydrated && items.length > 0 && (
+              <span className="ml-1 grid h-4 min-w-4 place-items-center rounded-full bg-primary px-1 text-[10px] font-semibold text-primary-foreground">{items.length}</span>
+            )}
+          </Link>
+          <Link to="/" className="text-xs uppercase tracking-[0.15em] text-muted-foreground hover:text-foreground">← Collection</Link>
+        </div>
       </header>
 
       <main className="mx-auto max-w-6xl px-6 pb-24 pt-8">
@@ -93,12 +114,17 @@ function ProductPage() {
             </div>
 
             <div className="mt-10 flex flex-wrap gap-3">
-              <Link
-                to="/"
-                hash="enquiry"
+              <button
+                onClick={handleAdd}
                 className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground hover:opacity-90"
               >
-                Enquire about {product.name} <ArrowRight className="h-4 w-4" />
+                {inCart ? (<><Check className="h-4 w-4" /> Added to cart</>) : (<><ShoppingBag className="h-4 w-4" /> Add to cart</>)}
+              </button>
+              <Link
+                to="/cart"
+                className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-6 py-3 text-sm font-medium hover:bg-muted"
+              >
+                View cart <ArrowRight className="h-4 w-4" />
               </Link>
               <Link to="/faq" className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-6 py-3 text-sm font-medium hover:bg-muted">
                 Read the FAQ

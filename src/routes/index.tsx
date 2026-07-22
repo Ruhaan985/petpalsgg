@@ -2,13 +2,14 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 
-import { ArrowRight, GraduationCap, Shield, Leaf, User } from "lucide-react";
+import { ArrowRight, GraduationCap, Shield, Leaf, User, ShoppingBag } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import heroDog from "@/assets/hero-dog.jpg";
 import petpalsLogo from "@/assets/petpals-logo.png";
 import introVideo from "@/assets/petpals-intro.mp4.asset.json";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/useAuth";
+import { useCart } from "@/lib/cart";
 import { toast } from "sonner";
 import { PRODUCTS } from "@/lib/products";
 import { getEnquiryCount } from "@/lib/enquiries.functions";
@@ -65,6 +66,7 @@ function IntroOverlay() {
 
 function Index() {
   const { user } = useAuth();
+  const { items: cartItems, hydrated: cartHydrated } = useCart();
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
@@ -101,6 +103,15 @@ function Index() {
           <Link to="/support" className="hover:text-foreground">Support</Link>
         </nav>
         <div className="flex items-center gap-2">
+          <Link
+            to="/cart"
+            className="relative inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3.5 py-1.5 text-xs font-medium hover:bg-muted"
+          >
+            <ShoppingBag className="h-3.5 w-3.5" /> Cart
+            {cartHydrated && cartItems.length > 0 && (
+              <span className="ml-1 grid h-4 min-w-4 place-items-center rounded-full bg-primary px-1 text-[10px] font-semibold text-primary-foreground">{cartItems.length}</span>
+            )}
+          </Link>
           {user ? (
             <>
               {isAdmin && (
