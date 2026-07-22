@@ -1,7 +1,9 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import petpalsLogo from "@/assets/petpals-logo.png";
 import { productById, PRODUCTS } from "@/lib/products";
-import { ArrowRight } from "lucide-react";
+import { useCart } from "@/lib/cart";
+import { toast } from "sonner";
+import { ArrowRight, ShoppingBag, Check } from "lucide-react";
 
 export const Route = createFileRoute("/products/$id")({
   loader: ({ params }) => {
