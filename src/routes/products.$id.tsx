@@ -44,6 +44,17 @@ function ProductPage() {
   const { product } = Route.useLoaderData();
   const Icon = product.icon;
   const others = PRODUCTS.filter((p) => p.id !== product.id);
+  const { add, has, items, hydrated } = useCart();
+  const inCart = hydrated && has(product.id);
+
+  const handleAdd = () => {
+    if (inCart) {
+      toast.info("Already in your cart.");
+      return;
+    }
+    add(product.id);
+    toast.success(`${product.name} added to cart.`);
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -52,7 +63,15 @@ function ProductPage() {
           <img src={petpalsLogo} alt="PetPals" className="h-8 w-8 rounded-lg bg-card object-contain" />
           <span className="font-display text-xl tracking-tight text-foreground">PetPals</span>
         </Link>
-        <Link to="/" className="text-xs uppercase tracking-[0.15em] text-muted-foreground hover:text-foreground">← Collection</Link>
+        <div className="flex items-center gap-3">
+          <Link to="/cart" className="relative inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3.5 py-1.5 text-xs font-medium hover:bg-muted">
+            <ShoppingBag className="h-3.5 w-3.5" /> Cart
+            {hydrated && items.length > 0 && (
+              <span className="ml-1 grid h-4 min-w-4 place-items-center rounded-full bg-primary px-1 text-[10px] font-semibold text-primary-foreground">{items.length}</span>
+            )}
+          </Link>
+          <Link to="/" className="text-xs uppercase tracking-[0.15em] text-muted-foreground hover:text-foreground">← Collection</Link>
+        </div>
       </header>
 
       <main className="mx-auto max-w-6xl px-6 pb-24 pt-8">
