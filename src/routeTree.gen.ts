@@ -13,6 +13,7 @@ import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SupportRouteImport } from './routes/support'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as CartRouteImport } from './routes/cart'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
@@ -38,6 +39,11 @@ const PrivacyRoute = PrivacyRouteImport.update({
 const FaqRoute = FaqRouteImport.update({
   id: '/faq',
   path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CartRoute = CartRouteImport.update({
+  id: '/cart',
+  path: '/cart',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -75,6 +81,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
+  '/cart': typeof CartRoute
   '/faq': typeof FaqRoute
   '/privacy': typeof PrivacyRoute
   '/support': typeof SupportRoute
@@ -86,6 +93,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
+  '/cart': typeof CartRoute
   '/faq': typeof FaqRoute
   '/privacy': typeof PrivacyRoute
   '/support': typeof SupportRoute
@@ -99,6 +107,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
+  '/cart': typeof CartRoute
   '/faq': typeof FaqRoute
   '/privacy': typeof PrivacyRoute
   '/support': typeof SupportRoute
@@ -112,6 +121,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/auth'
+    | '/cart'
     | '/faq'
     | '/privacy'
     | '/support'
@@ -123,6 +133,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/auth'
+    | '/cart'
     | '/faq'
     | '/privacy'
     | '/support'
@@ -135,6 +146,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/admin'
     | '/auth'
+    | '/cart'
     | '/faq'
     | '/privacy'
     | '/support'
@@ -148,6 +160,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AdminRoute: typeof AdminRoute
   AuthRoute: typeof AuthRoute
+  CartRoute: typeof CartRoute
   FaqRoute: typeof FaqRoute
   PrivacyRoute: typeof PrivacyRoute
   SupportRoute: typeof SupportRoute
@@ -183,6 +196,13 @@ declare module '@tanstack/react-router' {
       path: '/faq'
       fullPath: '/faq'
       preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cart': {
+      id: '/cart'
+      path: '/cart'
+      fullPath: '/cart'
+      preLoaderRoute: typeof CartRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -246,6 +266,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AdminRoute: AdminRoute,
   AuthRoute: AuthRoute,
+  CartRoute: CartRoute,
   FaqRoute: FaqRoute,
   PrivacyRoute: PrivacyRoute,
   SupportRoute: SupportRoute,
