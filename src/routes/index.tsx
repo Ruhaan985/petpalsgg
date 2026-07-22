@@ -66,6 +66,7 @@ function IntroOverlay() {
 
 function Index() {
   const { user } = useAuth();
+  const { items: cartItems, hydrated: cartHydrated } = useCart();
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
