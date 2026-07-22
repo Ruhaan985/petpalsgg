@@ -9,6 +9,7 @@ import petpalsLogo from "@/assets/petpals-logo.png";
 import introVideo from "@/assets/petpals-intro.mp4.asset.json";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/useAuth";
+import { useCart } from "@/lib/cart";
 import { toast } from "sonner";
 import { PRODUCTS } from "@/lib/products";
 import { getEnquiryCount } from "@/lib/enquiries.functions";
