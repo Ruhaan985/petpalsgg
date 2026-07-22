@@ -114,12 +114,17 @@ function ProductPage() {
             </div>
 
             <div className="mt-10 flex flex-wrap gap-3">
-              <Link
-                to="/"
-                hash="enquiry"
+              <button
+                onClick={handleAdd}
                 className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground hover:opacity-90"
               >
-                Enquire about {product.name} <ArrowRight className="h-4 w-4" />
+                {inCart ? (<><Check className="h-4 w-4" /> Added to cart</>) : (<><ShoppingBag className="h-4 w-4" /> Add to cart</>)}
+              </button>
+              <Link
+                to="/cart"
+                className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-6 py-3 text-sm font-medium hover:bg-muted"
+              >
+                View cart <ArrowRight className="h-4 w-4" />
               </Link>
               <Link to="/faq" className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-6 py-3 text-sm font-medium hover:bg-muted">
                 Read the FAQ
