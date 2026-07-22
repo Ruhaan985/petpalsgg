@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 
-import { ArrowRight, GraduationCap, Shield, Leaf, User } from "lucide-react";
+import { ArrowRight, GraduationCap, Shield, Leaf, User, ShoppingBag } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import heroDog from "@/assets/hero-dog.jpg";
 import petpalsLogo from "@/assets/petpals-logo.png";
