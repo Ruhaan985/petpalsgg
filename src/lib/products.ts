@@ -1,4 +1,4 @@
-import productHandbook from "@/assets/product-handbook.jpg";
+import handbookCover from "@/assets/handbook-cover.png.asset.json";
 import productBowl from "@/assets/product-bowl.jpg";
 import productLeash from "@/assets/product-leash.jpg";
 import { BookOpen, Utensils, MapPin } from "lucide-react";
@@ -6,16 +6,17 @@ import { BookOpen, Utensils, MapPin } from "lucide-react";
 export const PRODUCTS = [
   {
     id: "handbook",
-    name: "PetPals Handbook",
-    tagline: "A quiet guide to a happy pet.",
-    body: "A hand-bound care handbook covering nutrition, routines, gentle training and first-aid — written for new pet parents by students who obsess over the small details.",
-    image: productHandbook,
+    name: "Tails of Care",
+    tagline: "The PetPals handbook, written by Team Beagle.",
+    body: "An illustrated care handbook covering nutrition, routines, gentle training and first-aid — written for new pet parents by students who obsess over the small details.",
+    image: handbookCover.url,
+    fit: "contain" as const,
     icon: BookOpen,
-    meta: ["148 pages", "Linen hardcover", "Illustrated"],
+    meta: ["148 pages", "Illustrated", "Written by Team Beagle"],
     details: [
       "Ten chapters covering the first year of life together.",
-      "Illustrated in soft duotone by the design student on the team.",
-      "Printed on uncoated recycled stock, hand-bound in linen.",
+      "Fully illustrated, cover to cover, by the design student on the team.",
+      "Printed on uncoated recycled stock with a soft-touch cover.",
     ],
   },
   {
