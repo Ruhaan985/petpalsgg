@@ -76,11 +76,11 @@ function ProductPage() {
 
       <main className="mx-auto max-w-6xl px-6 pb-24 pt-8">
         <div className="grid gap-16 lg:grid-cols-[1.1fr_1fr]">
-          <div className="relative overflow-hidden rounded-2xl bg-muted">
+          <div className="relative overflow-hidden rounded-2xl bg-muted shadow-purple">
             <img
               src={product.image}
               alt={`${product.name} — fictional representation`}
-              className="aspect-square h-full w-full object-cover"
+              className={`aspect-square h-full w-full ${"fit" in product && product.fit === "contain" ? "object-contain p-6" : "object-cover"}`}
             />
             <div className="absolute bottom-3 left-3 rounded-full bg-background/80 px-2.5 py-1 text-[10px] uppercase tracking-wider text-muted-foreground backdrop-blur">
               Fictional representation or prototype
