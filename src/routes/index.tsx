@@ -123,7 +123,7 @@ function Index() {
                 </Link>
               )}
               <Link
-                to="/_authenticated/my-enquiries"
+                to="/my-enquiries"
                 className="hidden items-center gap-1.5 rounded-full border border-border bg-card px-3.5 py-1.5 text-xs font-medium hover:bg-muted sm:inline-flex"
               >
                 <User className="h-3.5 w-3.5" /> My enquiries
@@ -220,7 +220,7 @@ function Index() {
                   width={1200}
                   height={1200}
                   loading="lazy"
-                  className="aspect-square h-full w-full object-cover transition duration-700 group-hover:scale-[1.02]"
+                  className={`aspect-square h-full w-full transition duration-700 group-hover:scale-[1.02] ${"fit" in p && p.fit === "contain" ? "bg-card object-contain p-4" : "object-cover"}`}
                 />
                 <div className="absolute bottom-3 left-3 rounded-full bg-background/80 px-2.5 py-1 text-[10px] uppercase tracking-wider text-muted-foreground backdrop-blur">
                   Fictional representation or prototype
