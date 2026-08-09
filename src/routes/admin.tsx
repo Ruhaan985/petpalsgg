@@ -12,7 +12,7 @@ export const Route = createFileRoute("/admin")({
 });
 
 const ITEM_LABELS: Record<string, string> = {
-  handbook: "PetPals Handbook",
+  handbook: "Tails of Care (Handbook)",
   bowl: "Safe Eating Bowl",
   leash: "GPS Tracker Leash",
 };
