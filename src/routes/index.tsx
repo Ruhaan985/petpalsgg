@@ -333,7 +333,8 @@ function EnquirySection() {
       return;
     }
     setBusy(true);
-    const { data: inserted, error } = await supabase.from("enquiries").insert({
+    // Anonymous visitors have insert-only access, so only request the id back when signed in.
+    const insertQuery = supabase.from("enquiries").insert({
       name: form.name,
       email: form.email,
       phone: form.phone || null,
@@ -341,7 +342,10 @@ function EnquirySection() {
       message: form.message || null,
       interested_items: items,
       user_id: user?.id ?? null,
-    }).select("id").maybeSingle();
+    });
+    const { data: inserted, error } = user
+      ? await insertQuery.select("id").maybeSingle()
+      : { data: null as { id: string } | null, ...(await insertQuery) };
     setBusy(false);
     if (error) {
       toast.error("Couldn't send enquiry", { description: error.message });
