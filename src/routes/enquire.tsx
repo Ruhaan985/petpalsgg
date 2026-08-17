@@ -42,7 +42,7 @@ function EnquirePage() {
     e.preventDefault();
     if (items.length === 0) return;
     setBusy(true);
-    const { error } = await supabase.from("enquiries").insert({
+    const { data: inserted, error } = await supabase.from("enquiries").insert({
       name: form.name,
       email: form.email,
       phone: form.phone || null,
@@ -50,7 +50,7 @@ function EnquirePage() {
       message: form.message || null,
       interested_items: items,
       user_id: user?.id ?? null,
-    });
+    }).select("id").maybeSingle();
     setBusy(false);
     if (error) {
       toast.error("Couldn't send enquiry", { description: error.message });
@@ -59,7 +59,7 @@ function EnquirePage() {
     toast.success("Enquiry sent", { description: "We'll be in touch within 2 days." });
     const chosen = items.join(",");
     clear();
-    navigate({ to: "/payment", search: { items: chosen } });
+    navigate({ to: "/payment", search: { items: chosen, enquiry: inserted?.id ?? undefined } });
   };
 
   const field =

@@ -333,7 +333,7 @@ function EnquirySection() {
       return;
     }
     setBusy(true);
-    const { error } = await supabase.from("enquiries").insert({
+    const { data: inserted, error } = await supabase.from("enquiries").insert({
       name: form.name,
       email: form.email,
       phone: form.phone || null,
@@ -341,7 +341,7 @@ function EnquirySection() {
       message: form.message || null,
       interested_items: items,
       user_id: user?.id ?? null,
-    });
+    }).select("id").maybeSingle();
     setBusy(false);
     if (error) {
       toast.error("Couldn't send enquiry", { description: error.message });
@@ -351,7 +351,7 @@ function EnquirySection() {
     const chosen = items.join(",");
     setForm({ name: "", email: "", phone: "", pet_name: "", message: "" });
     setItems([]);
-    navigate({ to: "/payment", search: { items: chosen } });
+    navigate({ to: "/payment", search: { items: chosen, enquiry: inserted?.id ?? undefined } });
   };
 
   const field =
