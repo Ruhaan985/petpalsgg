@@ -44,11 +44,13 @@ function AdminPage() {
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
   const [enquiries, setEnquiries] = useState<Enquiry[]>([]);
   const [accounts, setAccounts] = useState<Account[]>([]);
+  const [payments, setPayments] = useState<{ enquiry_id: string | null; status: string; amount_paise: number }[]>([]);
   const [busy, setBusy] = useState(false);
 
   const fetchEnquiries = useServerFn(listEnquiries);
   const fetchAccounts = useServerFn(listAccounts);
   const updateStatus = useServerFn(setEnquiryStatus);
+  const fetchPayments = useServerFn(listPayments);
 
   useEffect(() => {
     if (loading) return;
@@ -64,9 +66,10 @@ function AdminPage() {
   const loadAll = async () => {
     setBusy(true);
     try {
-      const [e, a] = await Promise.all([fetchEnquiries(), fetchAccounts()]);
+      const [e, a, p] = await Promise.all([fetchEnquiries(), fetchAccounts(), fetchPayments()]);
       setEnquiries(e as Enquiry[]);
       setAccounts(a as Account[]);
+      setPayments(p as typeof payments);
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Failed to load");
     } finally {
@@ -164,6 +167,29 @@ function AdminPage() {
                       >
                         {e.status}
                       </span>
+                      {(() => {
+                        const ps = payments.filter((x) => x.enquiry_id === e.id);
+                        const paid = ps.find((x) => x.status === "paid");
+                        const failed = ps.find((x) => x.status === "failed");
+                        const label = paid
+                          ? `Paid ₹${paid.amount_paise / 100}`
+                          : failed
+                          ? "Payment failed"
+                          : "Unpaid";
+                        return (
+                          <span
+                            className={`rounded-full border px-3 py-0.5 text-xs font-bold uppercase ${
+                              paid
+                                ? "border-success/40 bg-success/10 text-success"
+                                : failed
+                                ? "border-destructive/40 bg-destructive/10 text-destructive"
+                                : "border-border text-muted-foreground"
+                            }`}
+                          >
+                            {label}
+                          </span>
+                        );
+                      })()}
                     </div>
                     <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground">
                       <span className="inline-flex items-center gap-1"><Mail className="h-3.5 w-3.5" /> {e.email}</span>

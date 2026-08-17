@@ -67,6 +67,17 @@ function MyEnquiries() {
                   </span>
                 ))}
               </div>
+              {(() => {
+                const ps = (e as { payments?: { status: string; amount_paise: number; razorpay_payment_id: string | null }[] }).payments ?? [];
+                const paid = ps.find((x) => x.status === "paid");
+                if (!paid) return null;
+                return (
+                  <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-success/40 bg-success/10 px-3 py-1 text-[10px] uppercase tracking-[0.15em] text-success">
+                    Paid ₹{paid.amount_paise / 100}
+                    {paid.razorpay_payment_id ? ` · ${paid.razorpay_payment_id}` : ""}
+                  </div>
+                );
+              })()}
               {e.pet_name && <div className="mt-4 text-sm text-muted-foreground">Pet: <span className="text-foreground">{e.pet_name}</span></div>}
               {e.message && <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{e.message}</p>}
             </article>
