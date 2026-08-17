@@ -22,6 +22,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductsIdRouteImport } from './routes/products.$id'
 import { Route as AuthenticatedMyEnquiriesRouteImport } from './routes/_authenticated/my-enquiries'
+import { Route as ApiPublicRazorpayWebhookRouteImport } from './routes/api/public/razorpay-webhook'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
@@ -88,6 +89,12 @@ const AuthenticatedMyEnquiriesRoute =
     path: '/my-enquiries',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const ApiPublicRazorpayWebhookRoute =
+  ApiPublicRazorpayWebhookRouteImport.update({
+    id: '/api/public/razorpay-webhook',
+    path: '/api/public/razorpay-webhook',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -102,6 +109,7 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/my-enquiries': typeof AuthenticatedMyEnquiriesRoute
   '/products/$id': typeof ProductsIdRoute
+  '/api/public/razorpay-webhook': typeof ApiPublicRazorpayWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -116,6 +124,7 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/my-enquiries': typeof AuthenticatedMyEnquiriesRoute
   '/products/$id': typeof ProductsIdRoute
+  '/api/public/razorpay-webhook': typeof ApiPublicRazorpayWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -132,6 +141,7 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/_authenticated/my-enquiries': typeof AuthenticatedMyEnquiriesRoute
   '/products/$id': typeof ProductsIdRoute
+  '/api/public/razorpay-webhook': typeof ApiPublicRazorpayWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -148,6 +158,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/my-enquiries'
     | '/products/$id'
+    | '/api/public/razorpay-webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -162,6 +173,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/my-enquiries'
     | '/products/$id'
+    | '/api/public/razorpay-webhook'
   id:
     | '__root__'
     | '/'
@@ -177,6 +189,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/_authenticated/my-enquiries'
     | '/products/$id'
+    | '/api/public/razorpay-webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -192,6 +205,7 @@ export interface RootRouteChildren {
   SupportRoute: typeof SupportRoute
   TermsRoute: typeof TermsRoute
   ProductsIdRoute: typeof ProductsIdRoute
+  ApiPublicRazorpayWebhookRoute: typeof ApiPublicRazorpayWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -287,6 +301,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMyEnquiriesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/public/razorpay-webhook': {
+      id: '/api/public/razorpay-webhook'
+      path: '/api/public/razorpay-webhook'
+      fullPath: '/api/public/razorpay-webhook'
+      preLoaderRoute: typeof ApiPublicRazorpayWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -314,6 +335,7 @@ const rootRouteChildren: RootRouteChildren = {
   SupportRoute: SupportRoute,
   TermsRoute: TermsRoute,
   ProductsIdRoute: ProductsIdRoute,
+  ApiPublicRazorpayWebhookRoute: ApiPublicRazorpayWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
