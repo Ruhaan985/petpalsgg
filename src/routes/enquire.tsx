@@ -42,7 +42,8 @@ function EnquirePage() {
     e.preventDefault();
     if (items.length === 0) return;
     setBusy(true);
-    const { error } = await supabase.from("enquiries").insert({
+    // Anonymous visitors have insert-only access, so only request the id back when signed in.
+    const insertQuery = supabase.from("enquiries").insert({
       name: form.name,
       email: form.email,
       phone: form.phone || null,
@@ -51,6 +52,11 @@ function EnquirePage() {
       interested_items: items,
       user_id: user?.id ?? null,
     });
+    const result = user
+      ? await insertQuery.select("id").maybeSingle()
+      : await insertQuery;
+    const error = result.error;
+    const inserted = (user ? result.data : null) as { id: string } | null;
     setBusy(false);
     if (error) {
       toast.error("Couldn't send enquiry", { description: error.message });
@@ -59,7 +65,7 @@ function EnquirePage() {
     toast.success("Enquiry sent", { description: "We'll be in touch within 2 days." });
     const chosen = items.join(",");
     clear();
-    navigate({ to: "/payment", search: { items: chosen } });
+    navigate({ to: "/payment", search: { items: chosen, enquiry: inserted?.id ?? undefined } });
   };
 
   const field =

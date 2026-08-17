@@ -15,7 +15,9 @@ export const listMyEnquiries = createServerFn({ method: "GET" })
   .handler(async ({ context }) => {
     const { data, error } = await context.supabase
       .from("enquiries")
-      .select("id, created_at, status, interested_items, pet_name, message")
+      .select(
+        "id, created_at, status, interested_items, pet_name, message, payments(status, amount_paise, razorpay_payment_id)",
+      )
       .eq("user_id", context.userId)
       .order("created_at", { ascending: false });
     if (error) throw new Error(error.message);
