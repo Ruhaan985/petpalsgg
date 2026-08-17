@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SupportRouteImport } from './routes/support'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as PaymentRouteImport } from './routes/payment'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as EnquireRouteImport } from './routes/enquire'
 import { Route as CartRouteImport } from './routes/cart'
@@ -35,6 +36,11 @@ const SupportRoute = SupportRouteImport.update({
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PaymentRoute = PaymentRouteImport.update({
+  id: '/payment',
+  path: '/payment',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FaqRoute = FaqRouteImport.update({
@@ -90,6 +96,7 @@ export interface FileRoutesByFullPath {
   '/cart': typeof CartRoute
   '/enquire': typeof EnquireRoute
   '/faq': typeof FaqRoute
+  '/payment': typeof PaymentRoute
   '/privacy': typeof PrivacyRoute
   '/support': typeof SupportRoute
   '/terms': typeof TermsRoute
@@ -103,6 +110,7 @@ export interface FileRoutesByTo {
   '/cart': typeof CartRoute
   '/enquire': typeof EnquireRoute
   '/faq': typeof FaqRoute
+  '/payment': typeof PaymentRoute
   '/privacy': typeof PrivacyRoute
   '/support': typeof SupportRoute
   '/terms': typeof TermsRoute
@@ -118,6 +126,7 @@ export interface FileRoutesById {
   '/cart': typeof CartRoute
   '/enquire': typeof EnquireRoute
   '/faq': typeof FaqRoute
+  '/payment': typeof PaymentRoute
   '/privacy': typeof PrivacyRoute
   '/support': typeof SupportRoute
   '/terms': typeof TermsRoute
@@ -133,6 +142,7 @@ export interface FileRouteTypes {
     | '/cart'
     | '/enquire'
     | '/faq'
+    | '/payment'
     | '/privacy'
     | '/support'
     | '/terms'
@@ -146,6 +156,7 @@ export interface FileRouteTypes {
     | '/cart'
     | '/enquire'
     | '/faq'
+    | '/payment'
     | '/privacy'
     | '/support'
     | '/terms'
@@ -160,6 +171,7 @@ export interface FileRouteTypes {
     | '/cart'
     | '/enquire'
     | '/faq'
+    | '/payment'
     | '/privacy'
     | '/support'
     | '/terms'
@@ -175,6 +187,7 @@ export interface RootRouteChildren {
   CartRoute: typeof CartRoute
   EnquireRoute: typeof EnquireRoute
   FaqRoute: typeof FaqRoute
+  PaymentRoute: typeof PaymentRoute
   PrivacyRoute: typeof PrivacyRoute
   SupportRoute: typeof SupportRoute
   TermsRoute: typeof TermsRoute
@@ -202,6 +215,13 @@ declare module '@tanstack/react-router' {
       path: '/privacy'
       fullPath: '/privacy'
       preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/payment': {
+      id: '/payment'
+      path: '/payment'
+      fullPath: '/payment'
+      preLoaderRoute: typeof PaymentRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/faq': {
@@ -289,6 +309,7 @@ const rootRouteChildren: RootRouteChildren = {
   CartRoute: CartRoute,
   EnquireRoute: EnquireRoute,
   FaqRoute: FaqRoute,
+  PaymentRoute: PaymentRoute,
   PrivacyRoute: PrivacyRoute,
   SupportRoute: SupportRoute,
   TermsRoute: TermsRoute,

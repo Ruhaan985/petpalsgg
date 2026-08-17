@@ -57,8 +57,9 @@ function EnquirePage() {
       return;
     }
     toast.success("Enquiry sent", { description: "We'll be in touch within 2 days." });
+    const chosen = items.join(",");
     clear();
-    navigate({ to: "/" });
+    navigate({ to: "/payment", search: { items: chosen } });
   };
 
   const field =
