@@ -343,9 +343,11 @@ function EnquirySection() {
       interested_items: items,
       user_id: user?.id ?? null,
     });
-    const { data: inserted, error } = user
+    const result = user
       ? await insertQuery.select("id").maybeSingle()
-      : { data: null as { id: string } | null, ...(await insertQuery) };
+      : await insertQuery;
+    const error = result.error;
+    const inserted = (user ? result.data : null) as { id: string } | null;
     setBusy(false);
     if (error) {
       toast.error("Couldn't send enquiry", { description: error.message });
