@@ -50,3 +50,15 @@ export const listAccounts = createServerFn({ method: "GET" })
       email_confirmed_at: u.email_confirmed_at ?? null,
     }));
   });
+
+export const listPayments = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    await assertAdmin(context);
+    const { data, error } = await context.supabase
+      .from("payments")
+      .select("id, enquiry_id, amount_paise, status, razorpay_payment_id, created_at")
+      .order("created_at", { ascending: false });
+    if (error) throw new Error(error.message);
+    return data ?? [];
+  });
