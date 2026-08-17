@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 
@@ -311,6 +311,7 @@ function Index() {
 
 function EnquirySection() {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [form, setForm] = useState({ name: "", email: "", phone: "", pet_name: "", message: "" });
   const [items, setItems] = useState<string[]>([]);
   const [busy, setBusy] = useState(false);
@@ -347,8 +348,10 @@ function EnquirySection() {
       return;
     }
     toast.success("Enquiry booked", { description: "We'll be in touch within 2 days." });
+    const chosen = items.join(",");
     setForm({ name: "", email: "", phone: "", pet_name: "", message: "" });
     setItems([]);
+    navigate({ to: "/payment", search: { items: chosen } });
   };
 
   const field =

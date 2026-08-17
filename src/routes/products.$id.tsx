@@ -113,7 +113,13 @@ function ProductPage() {
               ))}
             </div>
 
-            <div className="mt-10 flex flex-wrap gap-3">
+            <div className="mt-8 font-display text-2xl">
+              {"price" in product && product.price
+                ? <>₹{product.price} <span className="font-sans text-xs uppercase tracking-[0.15em] text-muted-foreground">prebooking</span></>
+                : <span className="font-sans text-xs uppercase tracking-[0.15em] text-muted-foreground">Prototype — enquiry only</span>}
+            </div>
+
+            <div className="mt-8 flex flex-wrap gap-3">
               <button
                 onClick={handleAdd}
                 className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground hover:opacity-90"

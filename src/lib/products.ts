@@ -8,6 +8,7 @@ export const PRODUCTS = [
     id: "handbook",
     name: "Tails of Care",
     tagline: "The PetPals handbook, written by Team Beagle.",
+    price: 520,
     body: "An illustrated care handbook covering nutrition, routines, gentle training and first-aid — written for new pet parents by students who obsess over the small details.",
     image: handbookCover.url,
     fit: "contain" as const,
@@ -23,6 +24,7 @@ export const PRODUCTS = [
     id: "bowl",
     name: "Safe Eating Bowl",
     tagline: "Portion patrol, quietly.",
+    price: null,
     body: "A wooden scale-base that senses portion weight and glows soft green when the meal is just right. No app, no noise — just healthier feeding, one bowl at a time.",
     image: productBowl,
     icon: Utensils,
@@ -37,6 +39,7 @@ export const PRODUCTS = [
     id: "leash",
     name: "GPS Tracker Leash",
     tagline: "Every walk, quietly mapped.",
+    price: null,
     body: "A soft leather leash with a discreet GPS puck stitched into the handle — live location, safe-zone alerts and a two-week battery, so a wandering beagle is never really lost.",
     image: productLeash,
     icon: MapPin,
@@ -52,3 +55,11 @@ export const PRODUCTS = [
 export type ProductId = (typeof PRODUCTS)[number]["id"];
 
 export const productById = (id: string) => PRODUCTS.find((p) => p.id === id);
+
+export const UPI = {
+  id: "mariyam.w@ptyes",
+  name: "Mariyam Waquar",
+};
+
+export const cartTotal = (ids: readonly string[]) =>
+  ids.reduce((sum, id) => sum + (productById(id)?.price ?? 0), 0);
