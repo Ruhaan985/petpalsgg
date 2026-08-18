@@ -22,6 +22,9 @@ export type Database = {
           interested_items: string[]
           message: string | null
           name: string
+          order_stage: string | null
+          order_stage_note: string | null
+          order_stage_updated_at: string | null
           pet_name: string | null
           phone: string | null
           status: string
@@ -34,6 +37,9 @@ export type Database = {
           interested_items?: string[]
           message?: string | null
           name: string
+          order_stage?: string | null
+          order_stage_note?: string | null
+          order_stage_updated_at?: string | null
           pet_name?: string | null
           phone?: string | null
           status?: string
@@ -46,6 +52,9 @@ export type Database = {
           interested_items?: string[]
           message?: string | null
           name?: string
+          order_stage?: string | null
+          order_stage_note?: string | null
+          order_stage_updated_at?: string | null
           pet_name?: string | null
           phone?: string | null
           status?: string

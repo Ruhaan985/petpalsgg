@@ -30,7 +30,10 @@ function MyEnquiries() {
           <img src={petpalsLogo} alt="PetPals" className="h-8 w-8 rounded-lg bg-card object-contain" />
           <span className="font-display text-xl tracking-tight text-foreground">PetPals</span>
         </Link>
-        <Link to="/" className="text-xs uppercase tracking-[0.15em] text-muted-foreground hover:text-foreground">← Home</Link>
+        <div className="flex items-center gap-5 text-xs uppercase tracking-[0.15em] text-muted-foreground">
+          <Link to="/my-orders" className="hover:text-foreground">My orders</Link>
+          <Link to="/" className="hover:text-foreground">← Home</Link>
+        </div>
       </header>
 
       <main className="mx-auto max-w-4xl px-6 py-16">

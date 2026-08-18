@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 
-import { ArrowRight, GraduationCap, Shield, Leaf, User, ShoppingBag } from "lucide-react";
+import { ArrowRight, GraduationCap, Shield, Leaf, User, ShoppingBag, Package } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import heroDog from "@/assets/hero-dog.jpg";
 import petpalsLogo from "@/assets/petpals-logo.png";
@@ -127,6 +127,12 @@ function Index() {
                 className="hidden items-center gap-1.5 rounded-full border border-border bg-card px-3.5 py-1.5 text-xs font-medium hover:bg-muted sm:inline-flex"
               >
                 <User className="h-3.5 w-3.5" /> My enquiries
+              </Link>
+              <Link
+                to="/my-orders"
+                className="hidden items-center gap-1.5 rounded-full border border-border bg-card px-3.5 py-1.5 text-xs font-medium hover:bg-muted sm:inline-flex"
+              >
+                <Package className="h-3.5 w-3.5" /> My orders
               </Link>
               <button
                 onClick={handleSignOut}

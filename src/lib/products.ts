@@ -58,7 +58,7 @@ export const productById = (id: string) => PRODUCTS.find((p) => p.id === id);
 
 export const UPI = {
   id: "mariyam.w@ptyes",
-  name: "Mariyam Waquar",
+  name: "Team Beagle",
 };
 
 export const cartTotal = (ids: readonly string[]) =>
