@@ -128,6 +128,12 @@ function Index() {
               >
                 <User className="h-3.5 w-3.5" /> My enquiries
               </Link>
+              <Link
+                to="/my-orders"
+                className="hidden items-center gap-1.5 rounded-full border border-border bg-card px-3.5 py-1.5 text-xs font-medium hover:bg-muted sm:inline-flex"
+              >
+                <Package className="h-3.5 w-3.5" /> My orders
+              </Link>
               <button
                 onClick={handleSignOut}
                 className="rounded-full px-3.5 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground"
