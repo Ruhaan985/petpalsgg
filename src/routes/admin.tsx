@@ -3,7 +3,8 @@ import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/lib/useAuth";
 import { supabase } from "@/integrations/supabase/client";
-import { listEnquiries, setEnquiryStatus, listAccounts, listPayments } from "@/lib/admin.functions";
+import { listEnquiries, setEnquiryStatus, setEnquiryStage, listAccounts, listPayments } from "@/lib/admin.functions";
+import { ALL_STAGES, stageMeta } from "@/lib/orderStages";
 import { toast } from "sonner";
 import { ArrowLeft, Check, X, Mail, Phone, PawPrint, RefreshCw } from "lucide-react";
 
@@ -27,6 +28,9 @@ type Enquiry = {
   status: string;
   created_at: string;
   interested_items: string[] | null;
+  order_stage: string | null;
+  order_stage_note: string | null;
+  order_stage_updated_at: string | null;
 };
 
 type Account = {
@@ -51,6 +55,7 @@ function AdminPage() {
   const fetchAccounts = useServerFn(listAccounts);
   const updateStatus = useServerFn(setEnquiryStatus);
   const fetchPayments = useServerFn(listPayments);
+  const updateStage = useServerFn(setEnquiryStage);
 
   useEffect(() => {
     if (loading) return;
@@ -87,6 +92,20 @@ function AdminPage() {
       await updateStatus({ data: { id, status } });
       setEnquiries((prev) => prev.map((x) => (x.id === id ? { ...x, status } : x)));
       toast.success(`Enquiry ${status}`);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Failed");
+    }
+  };
+
+  const handleStage = async (id: string, stage: string | null) => {
+    try {
+      await updateStage({ data: { id, stage } });
+      setEnquiries((prev) =>
+        prev.map((x) =>
+          x.id === id ? { ...x, order_stage: stage, order_stage_updated_at: new Date().toISOString() } : x,
+        ),
+      );
+      toast.success(stage ? `Stage set to ${stageMeta(stage)?.label ?? stage}` : "Tracking cleared");
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Failed");
     }
@@ -207,6 +226,35 @@ function AdminPage() {
                     )}
                     {e.message && <p className="mt-3 text-sm">{e.message}</p>}
                     <p className="mt-3 text-xs text-muted-foreground">{new Date(e.created_at).toLocaleString()}</p>
+                    <div className="mt-4 rounded-xl border border-border bg-background p-3">
+                      <div className="text-xs font-bold uppercase text-muted-foreground">Order tracking</div>
+                      <div className="mt-2 flex flex-wrap gap-1.5">
+                        {ALL_STAGES.map((s) => (
+                          <button
+                            key={s.id}
+                            onClick={() => handleStage(e.id, s.id)}
+                            className={`rounded-full px-3 py-1 text-xs font-semibold transition ${
+                              e.order_stage === s.id
+                                ? "bg-primary text-primary-foreground"
+                                : "border border-border hover:bg-muted"
+                            }`}
+                          >
+                            {s.label}
+                          </button>
+                        ))}
+                        <button
+                          onClick={() => handleStage(e.id, null)}
+                          className="rounded-full border border-border px-3 py-1 text-xs font-semibold text-muted-foreground hover:bg-muted"
+                        >
+                          Clear
+                        </button>
+                      </div>
+                      {e.order_stage_updated_at && (
+                        <p className="mt-2 text-xs text-muted-foreground">
+                          Updated {new Date(e.order_stage_updated_at).toLocaleString()}
+                        </p>
+                      )}
+                    </div>
                   </div>
                   <div className="flex gap-2">
                     <button
