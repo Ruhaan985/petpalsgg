@@ -62,3 +62,22 @@ export const listPayments = createServerFn({ method: "GET" })
     if (error) throw new Error(error.message);
     return data ?? [];
   });
+
+export const setEnquiryStage = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: { id: string; stage: string | null; note?: string | null }) => d)
+  .handler(async ({ data, context }) => {
+    await assertAdmin(context);
+    const allowed = ["ordered", "shipped", "out_for_delivery", "delivered", "ready_to_collect"];
+    if (data.stage !== null && !allowed.includes(data.stage)) throw new Error("Invalid stage");
+    const { error } = await context.supabase
+      .from("enquiries")
+      .update({
+        order_stage: data.stage,
+        order_stage_note: data.note?.slice(0, 500) ?? null,
+        order_stage_updated_at: data.stage ? new Date().toISOString() : null,
+      })
+      .eq("id", data.id);
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  });
