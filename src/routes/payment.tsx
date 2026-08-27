@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import petpalsLogo from "@/assets/petpals-logo.png";
 import upiQr from "@/assets/upi-qr.png.asset.json";
-import { PRODUCTS, UPI, cartTotal, productById } from "@/lib/products";
+import { UPI, cartTotal, itemLabel, itemPrice, productById } from "@/lib/products";
 import { createRazorpayOrder, getPaymentConfig, verifyRazorpayPayment } from "@/lib/payments.functions";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { toast } from "sonner";
@@ -61,7 +61,9 @@ function PaymentPage() {
   const { data: config } = useQuery({ queryKey: ["payment-config"], queryFn: () => configFn() });
 
   const ids = (items ?? "").split(",").filter(Boolean);
-  const chosen = ids.map(productById).filter(Boolean);
+  const chosen = ids
+    .filter((id) => Boolean(productById(id)))
+    .map((id) => ({ id, label: itemLabel(id), price: itemPrice(id) }));
   const total = cartTotal(ids);
 
   const upiUrl = `upi://pay?pa=${encodeURIComponent(UPI.id)}&pn=${encodeURIComponent(UPI.name)}&am=${total}&cu=INR&tn=${encodeURIComponent("PetPals prebooking")}`;
@@ -152,9 +154,9 @@ function PaymentPage() {
             <div className="mt-8 rounded-2xl border border-border bg-card/60 p-5">
               <div className="text-xs uppercase tracking-[0.15em] text-muted-foreground">Order summary</div>
               <ul className="mt-3 divide-y divide-border">
-                {chosen.map((p) => p && (
+                {chosen.map((p) => (
                   <li key={p.id} className="flex items-center justify-between py-2.5 text-sm">
-                    <span>{p.name}</span>
+                    <span>{p.label}</span>
                     <span className="text-muted-foreground">{p.price ? `₹${p.price}` : "Enquiry only"}</span>
                   </li>
                 ))}

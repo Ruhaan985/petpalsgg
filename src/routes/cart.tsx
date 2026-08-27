@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import petpalsLogo from "@/assets/petpals-logo.png";
-import { PRODUCTS } from "@/lib/products";
+import { productById, itemLabel, itemPrice, cartTotal } from "@/lib/products";
 import { useCart } from "@/lib/cart";
 import { ArrowRight, Trash2, ShoppingBag } from "lucide-react";
 
@@ -19,8 +19,12 @@ export const Route = createFileRoute("/cart")({
 function CartPage() {
   const { items, remove, clear, hydrated } = useCart();
   const cartProducts = items
-    .map((id) => PRODUCTS.find((p) => p.id === id))
-    .filter((p): p is (typeof PRODUCTS)[number] => Boolean(p));
+    .map((id) => {
+      const product = productById(id);
+      return product ? { id, product, label: itemLabel(id), price: itemPrice(id) } : null;
+    })
+    .filter((x): x is { id: string; product: NonNullable<ReturnType<typeof productById>>; label: string; price: number } => Boolean(x));
+  const total = cartTotal(items);
 
   return (
     <div className="min-h-screen bg-background">
@@ -59,20 +63,21 @@ function CartPage() {
             <ul className="mt-10 divide-y divide-border border-y border-border">
               {cartProducts.map((p) => (
                 <li key={p.id} className="grid grid-cols-[80px_1fr_auto] items-center gap-5 py-5">
-                  <img src={p.image} alt={p.name} className="aspect-square w-20 rounded-lg object-cover" />
+                  <img src={p.product.image} alt={p.product.name} className="aspect-square w-20 rounded-lg object-cover" />
                   <div>
                     <Link
                       to="/products/$id"
-                      params={{ id: p.id }}
+                      params={{ id: p.product.id }}
                       className="font-display text-xl hover:text-primary"
                     >
-                      {p.name}
+                      {p.label}
                     </Link>
-                    <div className="mt-1 text-xs italic text-muted-foreground">{p.tagline}</div>
+                    <div className="mt-1 text-xs italic text-muted-foreground">{p.product.tagline}</div>
+                    <div className="mt-1 text-xs text-muted-foreground">{p.price ? `₹${p.price}` : "Enquiry only"}</div>
                   </div>
                   <button
                     onClick={() => remove(p.id)}
-                    aria-label={`Remove ${p.name}`}
+                    aria-label={`Remove ${p.label}`}
                     className="grid h-9 w-9 place-items-center rounded-full border border-border text-muted-foreground hover:bg-muted hover:text-foreground"
                   >
                     <Trash2 className="h-4 w-4" />
@@ -80,6 +85,13 @@ function CartPage() {
                 </li>
               ))}
             </ul>
+
+            {total > 0 && (
+              <div className="mt-6 flex items-center justify-between border-b border-border pb-4">
+                <span className="text-xs uppercase tracking-[0.15em] text-muted-foreground">Estimated total</span>
+                <span className="font-display text-2xl">₹{total}</span>
+              </div>
+            )}
 
             <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
               <button
