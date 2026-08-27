@@ -3,7 +3,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { listMyEnquiries } from "@/lib/enquiries.functions";
 import petpalsLogo from "@/assets/petpals-logo.png";
-import { productById } from "@/lib/products";
+import { itemLabel } from "@/lib/products";
 
 export const Route = createFileRoute("/_authenticated/my-enquiries")({
   head: () => ({ meta: [{ title: "My enquiries — PetPals" }, { name: "robots", content: "noindex" }] }),
@@ -66,7 +66,7 @@ function MyEnquiries() {
               <div className="mt-4 flex flex-wrap gap-2">
                 {(e.interested_items ?? []).map((id: string) => (
                   <span key={id} className="rounded-full border border-border px-3 py-1 text-xs">
-                    {productById(id)?.name ?? id}
+                    {itemLabel(id)}
                   </span>
                 ))}
               </div>
