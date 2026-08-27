@@ -119,9 +119,37 @@ function ProductPage() {
               ))}
             </div>
 
+            {variants.length > 1 && (
+              <div className="mt-8">
+                <div className="text-xs uppercase tracking-[0.15em] text-muted-foreground">Choose an edition</div>
+                <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                  {variants.map((v) => {
+                    const active = v.id === variantId;
+                    return (
+                      <button
+                        key={v.id}
+                        type="button"
+                        onClick={() => setVariantId(v.id)}
+                        aria-pressed={active}
+                        className={`rounded-xl border p-4 text-left transition ${
+                          active ? "border-primary bg-primary/10" : "border-border bg-card hover:bg-muted"
+                        }`}
+                      >
+                        <div className="flex items-center justify-between gap-3">
+                          <span className="text-sm font-medium">{v.label}</span>
+                          <span className="font-display text-lg">₹{v.price}</span>
+                        </div>
+                        <p className="mt-1.5 text-xs text-muted-foreground">{v.note}</p>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
             <div className="mt-8 font-display text-2xl">
-              {"price" in product && product.price
-                ? <>₹{product.price} <span className="font-sans text-xs uppercase tracking-[0.15em] text-muted-foreground">prebooking</span></>
+              {displayPrice
+                ? <>₹{displayPrice} <span className="font-sans text-xs uppercase tracking-[0.15em] text-muted-foreground">prebooking</span></>
                 : <span className="font-sans text-xs uppercase tracking-[0.15em] text-muted-foreground">Prototype — enquiry only</span>}
             </div>
 
