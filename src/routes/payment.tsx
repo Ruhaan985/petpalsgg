@@ -130,7 +130,7 @@ function PaymentPage() {
             <ShieldCheck className="mx-auto h-9 w-9 text-primary" />
             <h1 className="mt-4 font-display text-4xl">Payment confirmed</h1>
             <p className="mt-3 text-sm text-muted-foreground">
-              Your copy of {PRODUCTS[0].name} is reserved. Reference <span className="text-foreground">{paidRef}</span>.
+              Your copy of Tails of Care is reserved. Reference <span className="text-foreground">{paidRef}</span>.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link to="/my-enquiries" className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-xs font-medium text-primary-foreground hover:opacity-90">
@@ -249,7 +249,7 @@ function PaymentPage() {
             )}
 
             <p className="mt-8 text-xs leading-relaxed text-muted-foreground">
-              PetPals is a student-led prebooking project. Payments reserve a copy of {PRODUCTS[0].name} and are fully refundable
+              PetPals is a student-led prebooking project. Payments reserve a copy of Tails of Care and are fully refundable
               within two days. Questions? wo1359rk@gmail.com
             </p>
           </>
