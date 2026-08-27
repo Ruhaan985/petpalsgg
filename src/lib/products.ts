@@ -97,4 +97,4 @@ export const UPI = {
 };
 
 export const cartTotal = (ids: readonly string[]) =>
-  ids.reduce((sum, id) => sum + (productById(id)?.price ?? 0), 0);
+  ids.reduce((sum, id) => sum + itemPrice(id), 0);
