@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import petpalsLogo from "@/assets/petpals-logo.png";
-import { productById, PRODUCTS } from "@/lib/products";
+import { productById, PRODUCTS, variantsFor } from "@/lib/products";
+import { useState } from "react";
 import { useCart } from "@/lib/cart";
 import { toast } from "sonner";
 import { ArrowRight, ShoppingBag, Check } from "lucide-react";
