@@ -54,7 +54,42 @@ export const PRODUCTS = [
 
 export type ProductId = (typeof PRODUCTS)[number]["id"];
 
-export const productById = (id: string) => PRODUCTS.find((p) => p.id === id);
+/** Purchasable editions. Cart/enquiry item ids use these keys. */
+export const VARIANTS: Record<string, { productId: string; label: string; price: number; note: string }> = {
+  handbook: {
+    productId: "handbook",
+    label: "Black & white edition",
+    price: 520,
+    note: "Line-art illustrations printed in monochrome on uncoated stock.",
+  },
+  "handbook-color": {
+    productId: "handbook",
+    label: "Colored edition",
+    price: 800,
+    note: "Full-colour illustrations throughout, printed on heavier stock.",
+  },
+};
+
+export const variantsFor = (productId: string) =>
+  Object.entries(VARIANTS)
+    .filter(([, v]) => v.productId === productId)
+    .map(([id, v]) => ({ id, ...v }));
+
+export const productById = (id: string) =>
+  PRODUCTS.find((p) => p.id === id) ??
+  PRODUCTS.find((p) => p.id === VARIANTS[id]?.productId);
+
+/** Display label for a cart/enquiry item id, including its edition. */
+export const itemLabel = (id: string) => {
+  const product = productById(id);
+  const variant = VARIANTS[id];
+  if (!product) return id;
+  return variant && variant.label !== product.name
+    ? `${product.name} — ${variant.label}`
+    : product.name;
+};
+
+export const itemPrice = (id: string) => VARIANTS[id]?.price ?? productById(id)?.price ?? 0;
 
 export const UPI = {
   id: "mariyam.w@ptyes",
