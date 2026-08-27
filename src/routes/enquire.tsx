@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import petpalsLogo from "@/assets/petpals-logo.png";
-import { PRODUCTS } from "@/lib/products";
+import { itemLabel, productById } from "@/lib/products";
 import { useCart } from "@/lib/cart";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/useAuth";
@@ -35,8 +35,8 @@ function EnquirePage() {
   }, [hydrated, items.length, navigate]);
 
   const cartProducts = items
-    .map((id) => PRODUCTS.find((p) => p.id === id))
-    .filter((p): p is (typeof PRODUCTS)[number] => Boolean(p));
+    .filter((id) => Boolean(productById(id)))
+    .map((id) => ({ id, label: itemLabel(id) }));
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -97,7 +97,7 @@ function EnquirePage() {
           <ul className="mt-3 flex flex-wrap gap-2">
             {cartProducts.map((p) => (
               <li key={p.id} className="rounded-full border border-border bg-background px-3 py-1 text-xs">
-                {p.name}
+                {p.label}
               </li>
             ))}
           </ul>

@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import petpalsLogo from "@/assets/petpals-logo.png";
-import { productById, PRODUCTS } from "@/lib/products";
+import { productById, PRODUCTS, variantsFor } from "@/lib/products";
+import { useState } from "react";
 import { useCart } from "@/lib/cart";
 import { toast } from "sonner";
 import { ArrowRight, ShoppingBag, Check } from "lucide-react";
@@ -45,15 +46,20 @@ function ProductPage() {
   const Icon = product.icon;
   const others = PRODUCTS.filter((p) => p.id !== product.id);
   const { add, has, items, hydrated } = useCart();
-  const inCart = hydrated && has(product.id);
+  const variants = variantsFor(product.id);
+  const [variantId, setVariantId] = useState(variants[0]?.id ?? product.id);
+  const selected = variants.find((v) => v.id === variantId);
+  const cartId = selected?.id ?? product.id;
+  const inCart = hydrated && has(cartId);
+  const displayPrice = selected?.price ?? ("price" in product ? product.price : null);
 
   const handleAdd = () => {
     if (inCart) {
       toast.info("Already in your cart.");
       return;
     }
-    add(product.id);
-    toast.success(`${product.name} added to cart.`);
+    add(cartId);
+    toast.success(`${product.name}${selected ? ` (${selected.label})` : ""} added to cart.`);
   };
 
   return (
@@ -113,9 +119,37 @@ function ProductPage() {
               ))}
             </div>
 
+            {variants.length > 1 && (
+              <div className="mt-8">
+                <div className="text-xs uppercase tracking-[0.15em] text-muted-foreground">Choose an edition</div>
+                <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                  {variants.map((v) => {
+                    const active = v.id === variantId;
+                    return (
+                      <button
+                        key={v.id}
+                        type="button"
+                        onClick={() => setVariantId(v.id)}
+                        aria-pressed={active}
+                        className={`rounded-xl border p-4 text-left transition ${
+                          active ? "border-primary bg-primary/10" : "border-border bg-card hover:bg-muted"
+                        }`}
+                      >
+                        <div className="flex items-center justify-between gap-3">
+                          <span className="text-sm font-medium">{v.label}</span>
+                          <span className="font-display text-lg">₹{v.price}</span>
+                        </div>
+                        <p className="mt-1.5 text-xs text-muted-foreground">{v.note}</p>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
             <div className="mt-8 font-display text-2xl">
-              {"price" in product && product.price
-                ? <>₹{product.price} <span className="font-sans text-xs uppercase tracking-[0.15em] text-muted-foreground">prebooking</span></>
+              {displayPrice
+                ? <>₹{displayPrice} <span className="font-sans text-xs uppercase tracking-[0.15em] text-muted-foreground">prebooking</span></>
                 : <span className="font-sans text-xs uppercase tracking-[0.15em] text-muted-foreground">Prototype — enquiry only</span>}
             </div>
 

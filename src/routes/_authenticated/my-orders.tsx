@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Check, Package, Truck, MapPin, Home, Store } from "lucide-react";
 import { listMyEnquiries } from "@/lib/enquiries.functions";
 import petpalsLogo from "@/assets/petpals-logo.png";
-import { productById } from "@/lib/products";
+import { itemLabel } from "@/lib/products";
 import { ORDER_STAGES, PICKUP_STAGE, stageIndex, stageMeta } from "@/lib/orderStages";
 
 export const Route = createFileRoute("/_authenticated/my-orders")({
@@ -123,7 +123,7 @@ function MyOrders() {
               <div className="mt-4 flex flex-wrap gap-2">
                 {(e.interested_items ?? []).map((id) => (
                   <span key={id} className="rounded-full border border-border px-3 py-1 text-xs">
-                    {productById(id)?.name ?? id}
+                    {itemLabel(id)}
                   </span>
                 ))}
               </div>

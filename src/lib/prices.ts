@@ -1,6 +1,7 @@
 // Server-safe price source of truth (in rupees). Keep in sync with src/lib/products.ts.
 export const PRICES_INR: Record<string, number> = {
   handbook: 520,
+  "handbook-color": 800,
 };
 
 export const totalInr = (ids: readonly string[]) =>

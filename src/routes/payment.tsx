@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import petpalsLogo from "@/assets/petpals-logo.png";
 import upiQr from "@/assets/upi-qr.png.asset.json";
-import { PRODUCTS, UPI, cartTotal, productById } from "@/lib/products";
+import { UPI, cartTotal, itemLabel, itemPrice, productById } from "@/lib/products";
 import { createRazorpayOrder, getPaymentConfig, verifyRazorpayPayment } from "@/lib/payments.functions";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { toast } from "sonner";
@@ -61,7 +61,9 @@ function PaymentPage() {
   const { data: config } = useQuery({ queryKey: ["payment-config"], queryFn: () => configFn() });
 
   const ids = (items ?? "").split(",").filter(Boolean);
-  const chosen = ids.map(productById).filter(Boolean);
+  const chosen = ids
+    .filter((id) => Boolean(productById(id)))
+    .map((id) => ({ id, label: itemLabel(id), price: itemPrice(id) }));
   const total = cartTotal(ids);
 
   const upiUrl = `upi://pay?pa=${encodeURIComponent(UPI.id)}&pn=${encodeURIComponent(UPI.name)}&am=${total}&cu=INR&tn=${encodeURIComponent("PetPals prebooking")}`;
@@ -128,7 +130,7 @@ function PaymentPage() {
             <ShieldCheck className="mx-auto h-9 w-9 text-primary" />
             <h1 className="mt-4 font-display text-4xl">Payment confirmed</h1>
             <p className="mt-3 text-sm text-muted-foreground">
-              Your copy of {PRODUCTS[0].name} is reserved. Reference <span className="text-foreground">{paidRef}</span>.
+              Your copy of Tails of Care is reserved. Reference <span className="text-foreground">{paidRef}</span>.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link to="/my-enquiries" className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-xs font-medium text-primary-foreground hover:opacity-90">
@@ -152,9 +154,9 @@ function PaymentPage() {
             <div className="mt-8 rounded-2xl border border-border bg-card/60 p-5">
               <div className="text-xs uppercase tracking-[0.15em] text-muted-foreground">Order summary</div>
               <ul className="mt-3 divide-y divide-border">
-                {chosen.map((p) => p && (
+                {chosen.map((p) => (
                   <li key={p.id} className="flex items-center justify-between py-2.5 text-sm">
-                    <span>{p.name}</span>
+                    <span>{p.label}</span>
                     <span className="text-muted-foreground">{p.price ? `₹${p.price}` : "Enquiry only"}</span>
                   </li>
                 ))}
@@ -247,7 +249,7 @@ function PaymentPage() {
             )}
 
             <p className="mt-8 text-xs leading-relaxed text-muted-foreground">
-              PetPals is a student-led prebooking project. Payments reserve a copy of {PRODUCTS[0].name} and are fully refundable
+              PetPals is a student-led prebooking project. Payments reserve a copy of Tails of Care and are fully refundable
               within two days. Questions? wo1359rk@gmail.com
             </p>
           </>

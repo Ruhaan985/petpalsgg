@@ -13,7 +13,8 @@ export const Route = createFileRoute("/admin")({
 });
 
 const ITEM_LABELS: Record<string, string> = {
-  handbook: "Tails of Care (Handbook)",
+  handbook: "Tails of Care — B&W (₹520)",
+  "handbook-color": "Tails of Care — Colored (₹800)",
   bowl: "Safe Eating Bowl",
   leash: "GPS Tracker Leash",
 };
