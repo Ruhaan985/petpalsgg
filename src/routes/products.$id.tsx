@@ -46,15 +46,20 @@ function ProductPage() {
   const Icon = product.icon;
   const others = PRODUCTS.filter((p) => p.id !== product.id);
   const { add, has, items, hydrated } = useCart();
-  const inCart = hydrated && has(product.id);
+  const variants = variantsFor(product.id);
+  const [variantId, setVariantId] = useState(variants[0]?.id ?? product.id);
+  const selected = variants.find((v) => v.id === variantId);
+  const cartId = selected?.id ?? product.id;
+  const inCart = hydrated && has(cartId);
+  const displayPrice = selected?.price ?? ("price" in product ? product.price : null);
 
   const handleAdd = () => {
     if (inCart) {
       toast.info("Already in your cart.");
       return;
     }
-    add(product.id);
-    toast.success(`${product.name} added to cart.`);
+    add(cartId);
+    toast.success(`${product.name}${selected ? ` (${selected.label})` : ""} added to cart.`);
   };
 
   return (
