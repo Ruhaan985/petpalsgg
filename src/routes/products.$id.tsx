@@ -10,13 +10,14 @@ export const Route = createFileRoute("/products/$id")({
   loader: ({ params }) => {
     const product = productById(params.id);
     if (!product) throw notFound();
-    return { product };
+    return { productId: product.id };
   },
   head: ({ loaderData }) => {
     if (!loaderData) {
       return { meta: [{ title: "Not found — PetPals" }, { name: "robots", content: "noindex" }] };
     }
-    const p = loaderData.product;
+    const p = productById(loaderData.productId);
+    if (!p) return {};
     return {
       meta: [
         { title: `${p.name} — PetPals` },
@@ -44,7 +45,9 @@ export const Route = createFileRoute("/products/$id")({
 });
 
 function ProductPage() {
-  const { product } = Route.useLoaderData();
+  const { productId } = Route.useLoaderData();
+  const product = productById(productId);
+  if (!product) throw notFound();
   const Icon = product.icon;
   const others = PRODUCTS.filter((p) => p.id !== product.id);
   const { add, has, items, hydrated } = useCart();

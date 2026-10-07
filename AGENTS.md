@@ -11,3 +11,5 @@
 
 - Keep purchasable book IDs and prices synchronized between the browser product catalog and the server-safe price module, with concrete price tests; payment validation must match the displayed cart total.
 - Use the shared product catalog for collection, detail, cart and enquiry entries so new books are available throughout the existing purchase flow.
+- Product route loaders return only serializable identifiers, not catalog objects with React icons; resolve presentation objects within the component and head callback.
+- Use Node's test/assert interfaces for small Bun-run price tests so tests require no additional type packages.
