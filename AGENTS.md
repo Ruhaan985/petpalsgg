@@ -13,3 +13,4 @@
 - Use the shared product catalog for collection, detail, cart and enquiry entries so new books are available throughout the existing purchase flow.
 - Product route loaders return only serializable identifiers, not catalog objects with React icons; resolve presentation objects within the component and head callback.
 - Use Node's test/assert interfaces for small Bun-run price tests so tests require no additional type packages.
+- Keep the opening film in a dedicated component with session-scoped playback, skip and sound controls; preserve its framing and bypass automatic motion for reduced-motion users.
