@@ -3,7 +3,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 
 import { ArrowRight, GraduationCap, Shield, Leaf, User, ShoppingBag, Package } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import heroDog from "@/assets/hero-dog.jpg";
 import petpalsLogo from "@/assets/petpals-logo.png";
 import introVideo from "@/assets/petpals-intro.mp4.asset.json";
@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import { PRODUCTS } from "@/lib/products";
 import { getEnquiryCount } from "@/lib/enquiries.functions";
 import { pageMeta } from "@/lib/page-meta";
+import { CinematicIntro } from "@/components/cinematic-intro";
 
 export const Route = createFileRoute("/")({
   head: () => ({ meta: pageMeta("PetPals — Beagle care by Team Beagle", "Prebook Tails of Care and its ₹499 companion quizbook A Final Pawprint, and explore Team Beagle's bowl and GPS leash prototypes.") }),
@@ -21,50 +22,6 @@ export const Route = createFileRoute("/")({
 });
 
 // Products moved to src/lib/products.ts
-
-function IntroOverlay() {
-  const [visible, setVisible] = useState(true);
-  const [fading, setFading] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (sessionStorage.getItem("petpals-intro-seen-v2")) {
-      setVisible(false);
-      return;
-    }
-    sessionStorage.setItem("petpals-intro-seen-v2", "1");
-  }, []);
-
-  const dismiss = () => {
-    setFading(true);
-    setTimeout(() => setVisible(false), 600);
-  };
-
-  if (!visible) return null;
-
-  return (
-    <div
-      className={`fixed inset-0 z-[100] bg-black transition-opacity duration-500 ${fading ? "opacity-0" : "opacity-100"}`}
-    >
-      <video
-        ref={videoRef}
-        src={introVideo.url}
-        autoPlay
-        muted
-        playsInline
-        onEnded={dismiss}
-        className="h-full w-full object-cover"
-      />
-      <button
-        onClick={dismiss}
-        className="absolute bottom-6 right-6 rounded-full border border-white/30 bg-black/40 px-4 py-2 text-xs uppercase tracking-[0.2em] text-white/80 backdrop-blur hover:bg-black/60"
-      >
-        Skip intro
-      </button>
-    </div>
-  );
-}
 
 function Index() {
   const { user } = useAuth();
@@ -84,7 +41,7 @@ function Index() {
 
   return (
     <div className="min-h-screen bg-background">
-      <IntroOverlay />
+      <CinematicIntro source={introVideo.url} />
       {/* NAV */}
       <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
         <Link to="/" className="flex items-center gap-2.5">
