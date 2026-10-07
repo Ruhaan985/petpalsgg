@@ -1,3 +1,4 @@
+import { pageMeta } from "@/lib/page-meta";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
@@ -6,7 +7,7 @@ import petpalsLogo from "@/assets/petpals-logo.png";
 import { itemLabel } from "@/lib/products";
 
 export const Route = createFileRoute("/_authenticated/my-enquiries")({
-  head: () => ({ meta: [{ title: "My enquiries — PetPals" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [...pageMeta("My enquiries — PetPals", "View your PetPals enquiries and their latest status."), { name: "robots", content: "noindex" }] }),
   component: MyEnquiries,
 });
 

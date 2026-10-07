@@ -15,6 +15,8 @@ export const Route = createFileRoute("/enquire")({
       { name: "description", content: "Send an enquiry about the PetPals pieces in your cart." },
       { property: "og:title", content: "Enquire — PetPals" },
       { property: "og:description", content: "Send an enquiry about the PetPals pieces in your cart." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: EnquirePage,

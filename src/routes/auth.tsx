@@ -1,3 +1,4 @@
+import { pageMeta } from "@/lib/page-meta";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
@@ -6,6 +7,7 @@ import { toast } from "sonner";
 import { ArrowLeft } from "lucide-react";
 
 export const Route = createFileRoute("/auth")({
+  head: () => ({ meta: [...pageMeta("Your account — PetPals", "Sign in to your PetPals account to track enquiries and book preorders."), { name: "robots", content: "noindex" }] }),
   component: AuthPage,
 });
 

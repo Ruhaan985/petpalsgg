@@ -7,6 +7,8 @@ export const Route = createFileRoute("/privacy")({
       { name: "description", content: "PetPals privacy policy — how we handle your data when you book an enquiry." },
       { property: "og:title", content: "Privacy Policy — PetPals" },
       { property: "og:description", content: "How PetPals collects, uses, and protects your enquiry data." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: PrivacyPage,

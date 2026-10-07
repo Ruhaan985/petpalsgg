@@ -23,6 +23,8 @@ export const Route = createFileRoute("/products/$id")({
         { name: "description", content: p.body },
         { property: "og:title", content: `${p.name} — PetPals` },
         { property: "og:description", content: p.tagline },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary_large_image" },
       ],
     };
   },

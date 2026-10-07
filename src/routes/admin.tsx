@@ -1,3 +1,4 @@
+import { pageMeta } from "@/lib/page-meta";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
@@ -9,6 +10,7 @@ import { toast } from "sonner";
 import { ArrowLeft, Check, X, Mail, Phone, PawPrint, RefreshCw } from "lucide-react";
 
 export const Route = createFileRoute("/admin")({
+  head: () => ({ meta: [...pageMeta("Team administration — PetPals", "Manage PetPals enquiries, accounts, payments and order stages."), { name: "robots", content: "noindex" }] }),
   component: AdminPage,
 });
 
