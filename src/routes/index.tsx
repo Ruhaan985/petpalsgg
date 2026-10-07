@@ -13,8 +13,10 @@ import { useCart } from "@/lib/cart";
 import { toast } from "sonner";
 import { PRODUCTS } from "@/lib/products";
 import { getEnquiryCount } from "@/lib/enquiries.functions";
+import { pageMeta } from "@/lib/page-meta";
 
 export const Route = createFileRoute("/")({
+  head: () => ({ meta: pageMeta("PetPals — Beagle care by Team Beagle", "Prebook Tails of Care and its ₹499 companion quizbook A Final Pawprint, and explore Team Beagle's bowl and GPS leash prototypes.") }),
   component: Index,
 });
 
@@ -165,8 +167,8 @@ function Index() {
               for the pets we love.
             </h1>
             <p className="mt-6 max-w-md text-base text-muted-foreground">
-              PetPals is a three-piece collection — a care handbook, a
-              gentle smart bowl and a GPS tracker leash — designed to make
+              PetPals is a four-piece collection — a care handbook, its
+              companion quizbook, a gentle smart bowl and a GPS tracker leash — designed to make
               everyday pet life a little calmer, a little kinder.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -207,12 +209,12 @@ function Index() {
         <div className="mb-16 flex items-end justify-between gap-6">
           <div>
             <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">The collection</div>
-            <h2 className="mt-3 font-display text-4xl md:text-5xl">Three objects. Everyday care.</h2>
+            <h2 className="mt-3 font-display text-4xl md:text-5xl">Four pieces. Everyday care.</h2>
           </div>
-          <div className="hidden text-sm text-muted-foreground md:block">03 / three pieces</div>
+          <div className="hidden text-sm text-muted-foreground md:block">04 / four pieces</div>
         </div>
 
-        <div className="grid gap-16 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-16 md:grid-cols-2">
           {PRODUCTS.map((p, i) => (
             <article key={p.id} className="group">
               <Link
@@ -378,7 +380,7 @@ function EnquirySection() {
             Interested? <em className="italic text-primary">Let's talk.</em>
           </h2>
           <p className="mt-5 max-w-sm text-sm text-muted-foreground">
-            We're not selling online yet. Tell us which piece you're curious
+            Prebook a book or register interest in our prototypes. Tell us which piece you're curious
             about and a founder will reach out within two days.
           </p>
           {countData && countData.count > 0 && (
