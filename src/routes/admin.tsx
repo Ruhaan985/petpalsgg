@@ -1,3 +1,4 @@
+import { pageMeta } from "@/lib/page-meta";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
@@ -9,12 +10,14 @@ import { toast } from "sonner";
 import { ArrowLeft, Check, X, Mail, Phone, PawPrint, RefreshCw } from "lucide-react";
 
 export const Route = createFileRoute("/admin")({
+  head: () => ({ meta: [...pageMeta("Team administration — PetPals", "Manage PetPals enquiries, accounts, payments and order stages."), { name: "robots", content: "noindex" }] }),
   component: AdminPage,
 });
 
 const ITEM_LABELS: Record<string, string> = {
   handbook: "Tails of Care — B&W (₹520)",
   "handbook-color": "Tails of Care — Colored (₹800)",
+  quizbook: "A Final Pawprint — Quizbook (₹499)",
   bowl: "Safe Eating Bowl",
   leash: "GPS Tracker Leash",
 };

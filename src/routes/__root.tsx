@@ -76,23 +76,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "PetPals — GPS Tracker Leash for Adventurous Dogs" },
+      { title: "PetPals — Team Beagle" },
       {
         name: "description",
         content:
-          "PetPals makes the smart yellow GPS tracker leash that keeps your dog safe on every walk. Live location, walk stats, and never a lost pup.",
+          "Beagle care books and student-led prototypes by Team Beagle.",
       },
-      { property: "og:title", content: "PetPals — GPS Tracker Leash for Adventurous Dogs" },
+      { property: "og:title", content: "PetPals — Team Beagle" },
       {
         property: "og:description",
-        content: "PetPals makes the smart yellow GPS tracker leash that keeps your dog safe on every walk. Live location, walk stats, and never a lost pup.",
+        content: "Beagle care books and student-led prototypes by Team Beagle.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "PetPals — GPS Tracker Leash for Adventurous Dogs" },
-      { name: "twitter:description", content: "PetPals makes the smart yellow GPS tracker leash that keeps your dog safe on every walk. Live location, walk stats, and never a lost pup." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/454adb25-c1bc-43d0-8253-cd33dc9a67a1/id-preview-ad273fcd--fe676381-b03e-4caa-b4f9-271e0b49f413.lovable.app-1784031896027.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/454adb25-c1bc-43d0-8253-cd33dc9a67a1/id-preview-ad273fcd--fe676381-b03e-4caa-b4f9-271e0b49f413.lovable.app-1784031896027.png" },
+      { name: "twitter:title", content: "PetPals — Team Beagle" },
+      { name: "twitter:description", content: "Beagle care books and student-led prototypes by Team Beagle." },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

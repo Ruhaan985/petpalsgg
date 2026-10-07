@@ -8,6 +8,8 @@ export const Route = createFileRoute("/support")({
       { name: "description", content: "PetPals support contact." },
       { property: "og:title", content: "Support — PetPals" },
       { property: "og:description", content: "PetPals support contact." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: SupportPage,

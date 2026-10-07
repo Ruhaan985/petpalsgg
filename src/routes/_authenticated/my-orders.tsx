@@ -1,3 +1,4 @@
+import { pageMeta } from "@/lib/page-meta";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
@@ -8,7 +9,7 @@ import { itemLabel } from "@/lib/products";
 import { ORDER_STAGES, PICKUP_STAGE, stageIndex, stageMeta } from "@/lib/orderStages";
 
 export const Route = createFileRoute("/_authenticated/my-orders")({
-  head: () => ({ meta: [{ title: "My orders — PetPals" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [...pageMeta("My orders — PetPals", "Track delivery and collection stages for your PetPals book preorders."), { name: "robots", content: "noindex" }] }),
   component: MyOrders,
 });
 

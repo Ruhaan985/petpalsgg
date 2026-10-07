@@ -11,6 +11,8 @@ export const Route = createFileRoute("/cart")({
       { name: "description", content: "Review the pieces you're interested in and proceed to enquire." },
       { property: "og:title", content: "Your Cart — PetPals" },
       { property: "og:description", content: "Review the pieces you're interested in and proceed to enquire." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: CartPage,

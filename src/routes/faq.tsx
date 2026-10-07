@@ -8,6 +8,8 @@ export const Route = createFileRoute("/faq")({
       { name: "description", content: "Answers to common questions about PetPals prebooking, demos and returns." },
       { property: "og:title", content: "FAQ — PetPals" },
       { property: "og:description", content: "Prebooking, timelines, demos and returns — answered plainly." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: FAQPage,
@@ -16,7 +18,7 @@ export const Route = createFileRoute("/faq")({
 const FAQS = [
   {
     q: "Is PetPals selling products right now?",
-    a: "No. PetPals is a student-led project in the prebooking stage. You can register interest in any of the three pieces and a founder will follow up personally — no payment is taken.",
+    a: "PetPals is a student-led prebooking project. Tails of Care is ₹520 in black & white or ₹800 in colour. Its companion quizbook, A Final Pawprint, is ₹499 and sold separately. Payment follows your enquiry; the bowl and leash remain enquiry-only prototypes.",
   },
   {
     q: "When will the pieces be available?",

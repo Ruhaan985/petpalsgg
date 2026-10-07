@@ -35,9 +35,13 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-cinema: var(--cinema);
+  --color-cinema-foreground: var(--cinema-foreground);
 }
 
 :root {
+  --cinema: oklch(0.045 0.012 300);
+  --cinema-foreground: oklch(0.96 0.012 95);
   --radius: 0.75rem;
 
   /* Dark purple base with sunny yellow accent */

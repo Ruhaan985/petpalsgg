@@ -1,7 +1,8 @@
 import handbookCover from "@/assets/handbook-cover.png.asset.json";
+import quizbookCover from "@/assets/final-pawprint-cover.png.asset.json";
 import productBowl from "@/assets/product-bowl.jpg";
 import productLeash from "@/assets/product-leash.jpg";
-import { BookOpen, Utensils, MapPin } from "lucide-react";
+import { BookOpen, Utensils, MapPin, NotebookPen } from "lucide-react";
 
 export const PRODUCTS = [
   {
@@ -18,6 +19,22 @@ export const PRODUCTS = [
       "Ten chapters covering the first year of life together.",
       "Fully illustrated, cover to cover, by the design student on the team.",
       "Printed on uncoated recycled stock with a soft-touch cover.",
+    ],
+  },
+  {
+    id: "quizbook",
+    name: "A Final Pawprint",
+    tagline: "The companion quizbook to Tails of Care.",
+    price: 499,
+    body: "Revisit what you've learned in Tails of Care with A Final Pawprint — Team Beagle's companion quizbook for thoughtful beagle care.",
+    image: quizbookCover.url,
+    fit: "contain" as const,
+    icon: NotebookPen,
+    meta: ["Companion quizbook", "Aligned to Tails of Care", "Team Beagle"],
+    details: [
+      "A companion to the original Tails of Care handbook.",
+      "Quiz-based learning to revisit the handbook's pet-care guidance.",
+      "Available separately for ₹499; the handbook is not included.",
     ],
   },
   {
@@ -56,6 +73,12 @@ export type ProductId = (typeof PRODUCTS)[number]["id"];
 
 /** Purchasable editions. Cart/enquiry item ids use these keys. */
 export const VARIANTS: Record<string, { productId: string; label: string; price: number; note: string }> = {
+  quizbook: {
+    productId: "quizbook",
+    label: "Companion quizbook",
+    price: 499,
+    note: "A Final Pawprint, aligned to the original Tails of Care handbook.",
+  },
   handbook: {
     productId: "handbook",
     label: "Black & white edition",

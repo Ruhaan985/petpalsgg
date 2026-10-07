@@ -26,9 +26,9 @@ export const Route = createFileRoute("/payment")({
   head: () => ({
     meta: [
       { title: "Complete Payment — PetPals" },
-      { name: "description", content: "Reserve your copy of Tails of Care — pay securely by card, UPI, wallet or netbanking." },
+      { name: "description", content: "Reserve your PetPals books — pay securely by card, UPI, wallet or netbanking." },
       { property: "og:title", content: "Complete Payment — PetPals" },
-      { property: "og:description", content: "Reserve your copy of Tails of Care — pay securely by card, UPI, wallet or netbanking." },
+      { property: "og:description", content: "Reserve your PetPals books — pay securely by card, UPI, wallet or netbanking." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -81,13 +81,15 @@ function PaymentPage() {
       if (!ok) throw new Error("Couldn't load the secure checkout");
       const order = await createOrder({ data: { items: ids, enquiryId: enquiry } });
 
-      const rz = new window.Razorpay!({
+      const Razorpay = window.Razorpay;
+      if (!Razorpay) throw new Error("Secure checkout is unavailable");
+      const rz = new Razorpay({
         key: order.keyId,
         order_id: order.orderId,
         amount: order.amountPaise,
         currency: "INR",
         name: "PetPals",
-        description: "Prebooking — Tails of Care",
+        description: "Prebooking — PetPals books",
         theme: { color: "#7c3aed" },
         handler: async (response: {
           razorpay_order_id: string;
@@ -130,7 +132,7 @@ function PaymentPage() {
             <ShieldCheck className="mx-auto h-9 w-9 text-primary" />
             <h1 className="mt-4 font-display text-4xl">Payment confirmed</h1>
             <p className="mt-3 text-sm text-muted-foreground">
-              Your copy of Tails of Care is reserved. Reference <span className="text-foreground">{paidRef}</span>.
+              Your selected PetPals books are reserved. Reference <span className="text-foreground">{paidRef}</span>.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link to="/my-enquiries" className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-xs font-medium text-primary-foreground hover:opacity-90">
@@ -249,7 +251,7 @@ function PaymentPage() {
             )}
 
             <p className="mt-8 text-xs leading-relaxed text-muted-foreground">
-              PetPals is a student-led prebooking project. Payments reserve a copy of Tails of Care and are fully refundable
+              PetPals is a student-led prebooking project. Payments reserve your selected PetPals books and are fully refundable
               within two days. Questions? wo1359rk@gmail.com
             </p>
           </>
