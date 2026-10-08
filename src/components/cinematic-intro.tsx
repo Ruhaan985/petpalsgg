@@ -14,9 +14,9 @@ export function CinematicIntro({ source }: { source: string }) {
   }, []);
 
   useEffect(() => {
-    if (!sessionStorage.getItem("petpals-cinematic-intro-v3") && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (!sessionStorage.getItem("petpals-cinematic-intro-v4") && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setVisible(true);
-      sessionStorage.setItem("petpals-cinematic-intro-v3", "1");
+      sessionStorage.setItem("petpals-cinematic-intro-v4", "1");
     }
     return () => { if (timeoutRef.current) clearTimeout(timeoutRef.current); };
   }, []);

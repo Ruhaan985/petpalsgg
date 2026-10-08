@@ -6,7 +6,7 @@ import { ArrowRight, GraduationCap, Shield, Leaf, User, ShoppingBag, Package } f
 import { useEffect, useState } from "react";
 import heroDog from "@/assets/hero-dog.jpg";
 import petpalsLogo from "@/assets/petpals-logo.png";
-import introVideo from "@/assets/petpals-intro.mp4.asset.json";
+import introVideo from "@/assets/petpals-cinematic-intro-45s.mp4.asset.json";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/useAuth";
 import { useCart } from "@/lib/cart";
