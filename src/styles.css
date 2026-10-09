@@ -42,13 +42,14 @@
 :root {
   --cinema: oklch(0.045 0.012 300);
   --cinema-foreground: oklch(0.96 0.012 95);
-  --radius: 0.75rem;
+  --radius: 0.5rem;
+  --hero-shade: linear-gradient(90deg, var(--background) 0%, color-mix(in oklab, var(--background) 92%, transparent) 25%, color-mix(in oklab, var(--background) 25%, transparent) 65%, transparent);
 
   /* Dark purple base with sunny yellow accent */
-  --background: oklch(0.13 0.035 300);
+  --background: oklch(0.14 0.023 300);
   --foreground: oklch(0.95 0.01 300);
 
-  --card: oklch(0.18 0.045 300);
+  --card: oklch(0.20 0.038 300);
   --card-foreground: oklch(0.95 0.01 300);
   --popover: oklch(0.18 0.045 300);
   --popover-foreground: oklch(0.95 0.01 300);
@@ -61,7 +62,7 @@
   --secondary-foreground: oklch(0.95 0.01 300);
 
   --muted: oklch(0.23 0.045 300);
-  --muted-foreground: oklch(0.72 0.03 300);
+  --muted-foreground: oklch(0.77 0.022 300);
 
   /* Vivid purple accent */
   --accent: oklch(0.62 0.21 300);
@@ -97,7 +98,7 @@
   h1, h2, h3 {
     font-family: var(--font-display);
     font-weight: 400;
-    letter-spacing: -0.025em;
+    letter-spacing: 0;
   }
 }
 
@@ -116,3 +117,13 @@
 @utility shadow-purple {
   box-shadow: var(--shadow-purple);
 }
+
+.home-hero { min-height: 560px; }
+.hero-shade { background: var(--hero-shade); }
+html { scroll-behavior: smooth; }
+[id] { scroll-margin-top: 2rem; }
+@media (max-width: 767px) {
+  .home-hero { min-height: 540px; }
+  .hero-shade { background: linear-gradient(0deg, var(--background), color-mix(in oklab, var(--background) 85%, transparent) 48%, color-mix(in oklab, var(--background) 12%, transparent)); }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
