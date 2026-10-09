@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { ArrowLeft, Check, X, Mail, Phone, PawPrint, RefreshCw } from "lucide-react";
 
 export const Route = createFileRoute("/admin")({
+  staticData: { sitemap: false },
   head: () => ({ meta: [...pageMeta("Team administration — PetPals", "Manage PetPals enquiries, accounts, payments and order stages."), { name: "robots", content: "noindex" }] }),
   component: AdminPage,
 });

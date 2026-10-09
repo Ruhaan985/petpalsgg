@@ -19,12 +19,14 @@ declare global {
 }
 
 export const Route = createFileRoute("/payment")({
+  staticData: { sitemap: false },
   validateSearch: (search: Record<string, unknown>): Search => ({
     items: typeof search.items === "string" ? search.items : undefined,
     enquiry: typeof search.enquiry === "string" ? search.enquiry : undefined,
   }),
   head: () => ({
     meta: [
+      { name: "robots", content: "noindex" },
       { title: "Complete Payment — PetPals" },
       { name: "description", content: "Reserve your PetPals books — pay securely by card, UPI, wallet or netbanking." },
       { property: "og:title", content: "Complete Payment — PetPals" },

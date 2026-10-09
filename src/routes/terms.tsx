@@ -1,8 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/terms")({
+  staticData: { sitemap: true },
   head: () => ({
+    links: [{ rel: "canonical", href: "https://petpalsgg.lovable.app/terms" }],
     meta: [
+      { property: "og:url", content: "https://petpalsgg.lovable.app/terms" },
       { title: "Terms & Conditions — PetPals" },
       {
         name: "description",

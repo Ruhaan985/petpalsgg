@@ -66,7 +66,7 @@ function AuthPage() {
             Your dog's second-favorite login.
           </h1>
           <p className="mt-4 max-w-md text-foreground/85">
-            A PetPals account unlocks live GPS tracking, walk history, and safe-zone alerts for every leash in your pack.
+            Keep your book prebookings, enquiry status and delivery updates together with your PetPals account.
           </p>
         </div>
         <div className="text-xs opacity-70">© {new Date().getFullYear()} PetPals</div>
@@ -87,7 +87,7 @@ function AuthPage() {
             </h2>
             <p className="mt-2 text-sm text-muted-foreground">
               {mode === "signin"
-                ? "Sign in to track your dog in real time."
+                ? "Sign in to view your enquiries and order updates."
                 : "Create your account in seconds."}
             </p>
 

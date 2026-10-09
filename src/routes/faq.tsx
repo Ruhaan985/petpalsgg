@@ -71,7 +71,7 @@ function FAQPage() {
           <div className="font-display text-2xl">Still curious?</div>
           <p className="mt-2 text-sm text-muted-foreground">Send an enquiry or write to us directly.</p>
           <div className="mt-5 flex gap-3">
-            <Link to="/" className="rounded-full bg-primary px-5 py-2.5 text-xs font-medium text-primary-foreground hover:opacity-90">Book an enquiry</Link>
+            <Link to="/" hash="enquiry" className="rounded-full bg-primary px-5 py-2.5 text-xs font-medium text-primary-foreground hover:opacity-90">Book an enquiry</Link>
             <Link to="/support" className="rounded-full border border-border bg-card px-5 py-2.5 text-xs font-medium hover:bg-muted">Contact support</Link>
           </div>
         </div>

@@ -26,7 +26,18 @@ export const Route = createFileRoute("/products/$id")({
         { property: "og:description", content: p.tagline },
         { property: "og:type", content: "website" },
         { name: "twitter:card", content: "summary_large_image" },
+        { property: "og:url", content: `https://petpalsgg.lovable.app/products/${p.id}` },
       ],
+      links: [{ rel: "canonical", href: `https://petpalsgg.lovable.app/products/${p.id}` }],
+      scripts: [{ type: "application/ld+json", children: JSON.stringify({
+        "@context": "https://schema.org", "@type": "Product", name: p.name,
+        description: p.body, url: `https://petpalsgg.lovable.app/products/${p.id}`,
+        brand: { "@type": "Brand", name: "PetPals" },
+        ...(p.price === null ? {} : { offers: variantsFor(p.id).map((v) => ({
+          "@type": "Offer", name: v.label, price: v.price, priceCurrency: "INR",
+          availability: "https://schema.org/PreOrder", url: `https://petpalsgg.lovable.app/products/${p.id}`,
+        })) }),
+      }) }],
     };
   },
   notFoundComponent: () => (

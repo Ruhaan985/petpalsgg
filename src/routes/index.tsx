@@ -18,6 +18,7 @@ import { pageMeta } from "@/lib/page-meta";
 import { CinematicIntro } from "@/components/cinematic-intro";
 
 export const Route = createFileRoute("/")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [...pageMeta("PetPals | Beagle Care Books & Pet Products — Team Beagle", "Discover PetPals by Team Beagle. Prebook Tails of Care from ₹520 and A Final Pawprint quizbook for ₹499, or enquire about our smart bowl and GPS leash prototypes."), { property: "og:url", content: "https://petpalsgg.lovable.app/" }],
     links: [{ rel: "canonical", href: "https://petpalsgg.lovable.app/" }],

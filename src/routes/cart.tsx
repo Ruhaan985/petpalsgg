@@ -5,8 +5,10 @@ import { useCart } from "@/lib/cart";
 import { ArrowRight, Trash2, ShoppingBag } from "lucide-react";
 
 export const Route = createFileRoute("/cart")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
+      { name: "robots", content: "noindex" },
       { title: "Your Cart — PetPals" },
       { name: "description", content: "Review the pieces you're interested in and proceed to enquire." },
       { property: "og:title", content: "Your Cart — PetPals" },

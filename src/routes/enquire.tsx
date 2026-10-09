@@ -9,8 +9,10 @@ import { toast } from "sonner";
 import { ArrowRight, ShoppingBag } from "lucide-react";
 
 export const Route = createFileRoute("/enquire")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
+      { name: "robots", content: "noindex" },
       { title: "Enquire — PetPals" },
       { name: "description", content: "Send an enquiry about the PetPals pieces in your cart." },
       { property: "og:title", content: "Enquire — PetPals" },
