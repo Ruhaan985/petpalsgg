@@ -88,6 +88,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content: "Beagle care books and student-led prototypes by Team Beagle.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "PetPals" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "PetPals — Team Beagle" },
       { name: "twitter:description", content: "Beagle care books and student-led prototypes by Team Beagle." },

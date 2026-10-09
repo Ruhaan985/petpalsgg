@@ -9,64 +9,25 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
-import { Route as AdminRouteImport } from './routes/admin'
-import { Route as AuthRouteImport } from './routes/auth'
-import { Route as CartRouteImport } from './routes/cart'
-import { Route as EnquireRouteImport } from './routes/enquire'
-import { Route as FaqRouteImport } from './routes/faq'
-import { Route as PaymentRouteImport } from './routes/payment'
-import { Route as PrivacyRouteImport } from './routes/privacy'
-import { Route as SupportRouteImport } from './routes/support'
 import { Route as TermsRouteImport } from './routes/terms'
-import { Route as AuthenticatedMyEnquiriesRouteImport } from './routes/_authenticated/my-enquiries'
-import { Route as AuthenticatedMyOrdersRouteImport } from './routes/_authenticated/my-orders'
+import { Route as SupportRouteImport } from './routes/support'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as PaymentRouteImport } from './routes/payment'
+import { Route as FaqRouteImport } from './routes/faq'
+import { Route as EnquireRouteImport } from './routes/enquire'
+import { Route as CartRouteImport } from './routes/cart'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductsIdRouteImport } from './routes/products.$id'
+import { Route as AuthenticatedMyOrdersRouteImport } from './routes/_authenticated/my-orders'
+import { Route as AuthenticatedMyEnquiriesRouteImport } from './routes/_authenticated/my-enquiries'
 import { Route as ApiPublicRazorpayWebhookRouteImport } from './routes/api/public/razorpay-webhook'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
-  id: '/_authenticated',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminRoute = AdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthRoute = AuthRouteImport.update({
-  id: '/auth',
-  path: '/auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CartRoute = CartRouteImport.update({
-  id: '/cart',
-  path: '/cart',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EnquireRoute = EnquireRouteImport.update({
-  id: '/enquire',
-  path: '/enquire',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FaqRoute = FaqRouteImport.update({
-  id: '/faq',
-  path: '/faq',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PaymentRoute = PaymentRouteImport.update({
-  id: '/payment',
-  path: '/payment',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PrivacyRoute = PrivacyRouteImport.update({
-  id: '/privacy',
-  path: '/privacy',
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SupportRoute = SupportRouteImport.update({
@@ -74,10 +35,59 @@ const SupportRoute = SupportRouteImport.update({
   path: '/support',
   getParentRoute: () => rootRouteImport,
 } as any)
-const TermsRoute = TermsRouteImport.update({
-  id: '/terms',
-  path: '/terms',
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
+} as any)
+const PaymentRoute = PaymentRouteImport.update({
+  id: '/payment',
+  path: '/payment',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnquireRoute = EnquireRouteImport.update({
+  id: '/enquire',
+  path: '/enquire',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CartRoute = CartRouteImport.update({
+  id: '/cart',
+  path: '/cart',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductsIdRoute = ProductsIdRouteImport.update({
+  id: '/products/$id',
+  path: '/products/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedMyOrdersRoute = AuthenticatedMyOrdersRouteImport.update({
+  id: '/my-orders',
+  path: '/my-orders',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedMyEnquiriesRoute =
   AuthenticatedMyEnquiriesRouteImport.update({
@@ -85,16 +95,6 @@ const AuthenticatedMyEnquiriesRoute =
     path: '/my-enquiries',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedMyOrdersRoute = AuthenticatedMyOrdersRouteImport.update({
-  id: '/my-orders',
-  path: '/my-orders',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const ProductsIdRoute = ProductsIdRouteImport.update({
-  id: '/products/$id',
-  path: '/products/$id',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiPublicRazorpayWebhookRoute =
   ApiPublicRazorpayWebhookRouteImport.update({
     id: '/api/public/razorpay-webhook',
@@ -222,67 +222,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_authenticated': {
-      id: '/_authenticated'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin': {
-      id: '/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AdminRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/cart': {
-      id: '/cart'
-      path: '/cart'
-      fullPath: '/cart'
-      preLoaderRoute: typeof CartRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/enquire': {
-      id: '/enquire'
-      path: '/enquire'
-      fullPath: '/enquire'
-      preLoaderRoute: typeof EnquireRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/faq': {
-      id: '/faq'
-      path: '/faq'
-      fullPath: '/faq'
-      preLoaderRoute: typeof FaqRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/payment': {
-      id: '/payment'
-      path: '/payment'
-      fullPath: '/payment'
-      preLoaderRoute: typeof PaymentRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/privacy': {
-      id: '/privacy'
-      path: '/privacy'
-      fullPath: '/privacy'
-      preLoaderRoute: typeof PrivacyRouteImport
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/support': {
@@ -292,19 +236,75 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SupportRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/terms': {
-      id: '/terms'
-      path: '/terms'
-      fullPath: '/terms'
-      preLoaderRoute: typeof TermsRouteImport
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/my-enquiries': {
-      id: '/_authenticated/my-enquiries'
-      path: '/my-enquiries'
-      fullPath: '/my-enquiries'
-      preLoaderRoute: typeof AuthenticatedMyEnquiriesRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/payment': {
+      id: '/payment'
+      path: '/payment'
+      fullPath: '/payment'
+      preLoaderRoute: typeof PaymentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/enquire': {
+      id: '/enquire'
+      path: '/enquire'
+      fullPath: '/enquire'
+      preLoaderRoute: typeof EnquireRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cart': {
+      id: '/cart'
+      path: '/cart'
+      fullPath: '/cart'
+      preLoaderRoute: typeof CartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/products/$id': {
+      id: '/products/$id'
+      path: '/products/$id'
+      fullPath: '/products/$id'
+      preLoaderRoute: typeof ProductsIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_authenticated/my-orders': {
       id: '/_authenticated/my-orders'
@@ -313,12 +313,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMyOrdersRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/products/$id': {
-      id: '/products/$id'
-      path: '/products/$id'
-      fullPath: '/products/$id'
-      preLoaderRoute: typeof ProductsIdRouteImport
-      parentRoute: typeof rootRouteImport
+    '/_authenticated/my-enquiries': {
+      id: '/_authenticated/my-enquiries'
+      path: '/my-enquiries'
+      fullPath: '/my-enquiries'
+      preLoaderRoute: typeof AuthenticatedMyEnquiriesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/api/public/razorpay-webhook': {
       id: '/api/public/razorpay-webhook'

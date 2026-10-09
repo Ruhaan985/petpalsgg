@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 
-import { ArrowRight, GraduationCap, Shield, Leaf, User, ShoppingBag, Package } from "lucide-react";
+import { ArrowRight, GraduationCap, Shield, Leaf, User, ShoppingBag, Package, Menu, BookOpen } from "lucide-react";
 import { useEffect, useState } from "react";
 import heroDog from "@/assets/hero-dog.jpg";
 import petpalsLogo from "@/assets/petpals-logo.png";
@@ -11,13 +11,19 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/useAuth";
 import { useCart } from "@/lib/cart";
 import { toast } from "sonner";
-import { PRODUCTS } from "@/lib/products";
+import { PRODUCTS, variantsFor } from "@/lib/products";
+import { Button } from "@/components/ui/button";
 import { getEnquiryCount } from "@/lib/enquiries.functions";
 import { pageMeta } from "@/lib/page-meta";
 import { CinematicIntro } from "@/components/cinematic-intro";
 
 export const Route = createFileRoute("/")({
-  head: () => ({ meta: pageMeta("PetPals — Beagle care by Team Beagle", "Prebook Tails of Care and its ₹499 companion quizbook A Final Pawprint, and explore Team Beagle's bowl and GPS leash prototypes.") }),
+  staticData: { sitemap: true },
+  head: () => ({
+    meta: [...pageMeta("PetPals | Beagle Care Books & Pet Products — Team Beagle", "Discover PetPals by Team Beagle. Prebook Tails of Care from ₹520 and A Final Pawprint quizbook for ₹499, or enquire about our smart bowl and GPS leash prototypes."), { property: "og:url", content: "https://petpalsgg.lovable.app/" }],
+    links: [{ rel: "canonical", href: "https://petpalsgg.lovable.app/" }],
+    scripts: [{ type: "application/ld+json", children: JSON.stringify({ "@context": "https://schema.org", "@type": "WebSite", name: "PetPals", alternateName: "PetPals by Team Beagle", url: "https://petpalsgg.lovable.app/", description: "Student-led beagle care books and pet product prototypes by Team Beagle.", publisher: { "@type": "Organization", name: "Team Beagle", url: "https://petpalsgg.lovable.app/" } }) }],
+  }),
   component: Index,
 });
 
@@ -43,7 +49,7 @@ function Index() {
     <div className="min-h-screen bg-background">
       <CinematicIntro source={introVideo.url} />
       {/* NAV */}
-      <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
+      <header className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-5 py-5">
         <Link to="/" className="flex items-center gap-2.5">
           <img
             src={petpalsLogo}
@@ -52,7 +58,7 @@ function Index() {
             height={32}
             className="h-8 w-8 rounded-lg bg-card object-contain"
           />
-          <span className="font-display text-xl tracking-tight text-foreground">PetPals</span>
+          <div><span className="font-display text-2xl text-foreground">PetPals</span><span className="block text-[10px] uppercase tracking-[0.15em] text-muted-foreground">By Team Beagle</span></div>
         </Link>
         <nav className="hidden items-center gap-8 text-sm text-muted-foreground md:flex">
           <a href="#products" className="hover:text-foreground">Products</a>
@@ -93,12 +99,12 @@ function Index() {
               >
                 <Package className="h-3.5 w-3.5" /> My orders
               </Link>
-              <button
+              <Button variant="ghost" size="sm"
                 onClick={handleSignOut}
                 className="rounded-full px-3.5 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground"
               >
                 Sign out
-              </button>
+              </Button>
             </>
           ) : (
             <Link
@@ -109,75 +115,59 @@ function Index() {
             </Link>
           )}
         </div>
+        <details className="w-full border-t border-border pt-3 md:hidden">
+          <summary className="flex cursor-pointer list-none items-center gap-2 text-sm text-muted-foreground"><Menu className="h-4 w-4" /> Explore PetPals</summary>
+          <nav className="grid grid-cols-3 gap-4 py-4 text-sm" aria-label="Mobile navigation">
+            <a href="#products">Collection</a><a href="#story">Our story</a><a href="#enquiry">Enquire</a><Link to="/faq">FAQ</Link><Link to="/support">Support</Link>
+            {user && <><Link to="/my-orders">My orders</Link><Link to="/my-enquiries">My enquiries</Link></>}
+          </nav>
+        </details>
       </header>
 
       {/* HERO */}
-      <section className="mx-auto max-w-6xl px-6 pt-16 pb-24">
-        <div className="grid items-end gap-16 lg:grid-cols-[1.1fr_1fr]">
-          <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-border px-3 py-1 text-xs text-muted-foreground">
-              <Leaf className="h-3 w-3" /> Student-led · Prebooking only
+      <section className="home-hero relative flex items-end overflow-hidden md:items-center">
+        <img src={heroDog} alt="Beagle resting on linen — fictional representation" width={1408} height={1408} fetchPriority="high" className="absolute inset-0 h-full w-full object-cover object-[center_35%] md:object-[center_42%]" />
+        <div className="hero-shade absolute inset-0" />
+        <div className="relative mx-auto w-full max-w-6xl px-6 py-12 md:py-14">
+          <div className="max-w-lg">
+            <div className="flex items-center gap-2 text-xs uppercase tracking-[0.15em] text-primary"><Leaf className="h-3.5 w-3.5" /> Student-led. Beagle-loved.</div>
+            <h1 className="mt-5 font-display text-6xl text-primary md:text-8xl">PetPals</h1>
+            <h2 className="mt-3 font-display text-4xl leading-tight text-foreground md:text-5xl">A little care.<br />A happier beagle.</h2>
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-foreground/85">Thoughtful care books and curious little inventions. Made by Team Beagle, for the companions who make life better.</p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <Button asChild size="lg"><a href="#products">Explore the collection <ArrowRight /></a></Button>
+              <Button asChild variant="outline" size="lg"><a href="#enquiry">Book an enquiry</a></Button>
             </div>
-            <h1 className="mt-6 font-display text-5xl leading-[1.05] text-foreground md:text-7xl">
-              Small things,<br />
-              <em className="italic text-primary">softly considered</em>,<br />
-              for the pets we love.
-            </h1>
-            <p className="mt-6 max-w-md text-base text-muted-foreground">
-              PetPals is a four-piece collection — a care handbook, its
-              companion quizbook, a gentle smart bowl and a GPS tracker leash — designed to make
-              everyday pet life a little calmer, a little kinder.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <a
-                href="#enquiry"
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground hover:opacity-90"
-              >
-                Book an enquiry <ArrowRight className="h-4 w-4" />
-              </a>
-              <a
-                href="#products"
-                className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-6 py-3 text-sm font-medium hover:bg-muted"
-              >
-                View the collection
-              </a>
-            </div>
-          </div>
-
-          <div className="relative">
-            <div className="relative overflow-hidden rounded-2xl">
-              <img
-                src={heroDog}
-                alt="Beagle sitting quietly on linen — fictional representation"
-                width={1408}
-                height={1408}
-                className="h-full w-full object-cover"
-              />
-              <div className="absolute bottom-3 left-3 rounded-full bg-background/80 px-2.5 py-1 text-[10px] uppercase tracking-wider text-muted-foreground backdrop-blur">
-                Fictional representation or prototype
-              </div>
-            </div>
+            <p className="mt-5 text-xs text-muted-foreground">Book preorders · Bowl & leash prototypes</p>
           </div>
         </div>
+        <span className="absolute right-3 top-3 max-w-[180px] bg-background/80 px-2 py-1 text-[9px] uppercase tracking-wider text-foreground">Fictional representation or prototype</span>
       </section>
+      <div className="border-y border-border bg-secondary/40">
+        <div className="mx-auto grid max-w-6xl grid-cols-3 gap-3 px-6 py-5 text-center text-xs text-muted-foreground">
+          <span className="flex flex-col items-center gap-2 sm:flex-row sm:justify-center"><BookOpen className="h-4 w-4 text-primary" /> Books for better care</span>
+          <span className="flex flex-col items-center gap-2 sm:flex-row sm:justify-center"><GraduationCap className="h-4 w-4 text-primary" /> Independent student founders</span>
+          <span className="flex flex-col items-center gap-2 sm:flex-row sm:justify-center"><Package className="h-4 w-4 text-primary" /> Prebooking only</span>
+        </div>
+      </div>
 
       {/* PRODUCTS */}
-      <section id="products" className="mx-auto max-w-6xl px-6 py-24">
-        <div className="mb-16 flex items-end justify-between gap-6">
+      <section id="products" className="mx-auto max-w-6xl px-6 py-14 md:py-16">
+        <div className="mb-9 flex items-end justify-between gap-6">
           <div>
             <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">The collection</div>
-            <h2 className="mt-3 font-display text-4xl md:text-5xl">Four pieces. Everyday care.</h2>
+            <h2 className="mt-3 font-display text-3xl md:text-4xl">Good reads. Better routines.</h2>
           </div>
           <div className="hidden text-sm text-muted-foreground md:block">04 / four pieces</div>
         </div>
 
-        <div className="grid gap-16 md:grid-cols-2">
+        <div className="grid gap-x-10 gap-y-14 md:grid-cols-2">
           {PRODUCTS.map((p, i) => (
             <article key={p.id} className="group">
               <Link
                 to="/products/$id"
                 params={{ id: p.id }}
-                className="relative block overflow-hidden rounded-xl bg-muted"
+                className="relative block overflow-hidden rounded-lg bg-muted"
               >
                 <img
                   src={p.image}
@@ -185,7 +175,7 @@ function Index() {
                   width={1200}
                   height={1200}
                   loading="lazy"
-                  className={`aspect-square h-full w-full transition duration-700 group-hover:scale-[1.02] ${"fit" in p && p.fit === "contain" ? "bg-card object-contain p-4" : "object-cover"}`}
+                  className={`aspect-[5/4] w-full transition duration-700 motion-reduce:transition-none group-hover:scale-[1.02] ${"fit" in p && p.fit === "contain" ? "bg-card object-contain p-6" : "object-cover"}`}
                 />
                 <div className="absolute bottom-3 left-3 rounded-full bg-background/80 px-2.5 py-1 text-[10px] uppercase tracking-wider text-muted-foreground backdrop-blur">
                   Fictional representation or prototype
@@ -204,6 +194,10 @@ function Index() {
                 </div>
               </div>
               <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{p.body}</p>
+              <div className="mt-4 flex items-center justify-between gap-3 border-t border-border pt-4 text-sm">
+                <span className="font-semibold text-primary">{p.id === "handbook" ? `₹${variantsFor(p.id)[0]?.price} B&W / ₹${variantsFor(p.id)[1]?.price} Colored` : p.price === null ? "Enquiry-only prototype" : `₹${p.price}`}</span>
+                <span className="text-xs text-muted-foreground">{p.price === null ? "In development" : "Prebooking"}</span>
+              </div>
               <div className="mt-5 flex flex-wrap gap-2">
                 {p.meta.map((m) => (
                   <span key={m} className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground">
@@ -216,7 +210,7 @@ function Index() {
                 params={{ id: p.id }}
                 className="mt-5 inline-flex items-center gap-1 text-xs uppercase tracking-[0.15em] text-primary hover:opacity-80"
               >
-                Learn more <ArrowRight className="h-3 w-3" />
+                {p.price === null ? "Explore prototype" : "View book"} <ArrowRight className="h-3 w-3" />
               </Link>
             </article>
           ))}
@@ -262,7 +256,7 @@ function Index() {
             <img src={petpalsLogo} alt="PetPals logo" width={20} height={20} className="h-5 w-5 rounded object-contain" loading="lazy" />
             <span>© {new Date().getFullYear()} PetPals — a student project.</span>
           </div>
-          <div className="flex gap-6">
+          <div className="flex flex-wrap justify-center gap-6">
             <Link to="/faq" className="hover:text-foreground">FAQ</Link>
             <Link to="/support" className="hover:text-foreground">Support</Link>
             <Link to="/privacy" className="hover:text-foreground">Privacy</Link>
@@ -393,33 +387,33 @@ function EnquirySection() {
 
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <label className="mb-1.5 block text-xs uppercase tracking-[0.15em] text-muted-foreground">Name*</label>
-              <input required maxLength={100} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={field} />
+              <label htmlFor="home-name" className="mb-1.5 block text-xs uppercase tracking-[0.15em] text-muted-foreground">Name*</label>
+              <input id="home-name" required maxLength={100} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={field} />
             </div>
             <div>
-              <label className="mb-1.5 block text-xs uppercase tracking-[0.15em] text-muted-foreground">Email*</label>
-              <input type="email" required maxLength={255} value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className={field} />
+              <label htmlFor="home-email" className="mb-1.5 block text-xs uppercase tracking-[0.15em] text-muted-foreground">Email*</label>
+              <input id="home-email" type="email" required maxLength={255} value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className={field} />
             </div>
             <div>
-              <label className="mb-1.5 block text-xs uppercase tracking-[0.15em] text-muted-foreground">Phone</label>
-              <input maxLength={40} value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className={field} />
+              <label htmlFor="home-phone" className="mb-1.5 block text-xs uppercase tracking-[0.15em] text-muted-foreground">Phone</label>
+              <input id="home-phone" maxLength={40} value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className={field} />
             </div>
             <div>
-              <label className="mb-1.5 block text-xs uppercase tracking-[0.15em] text-muted-foreground">Pet's name</label>
-              <input maxLength={100} value={form.pet_name} onChange={(e) => setForm({ ...form, pet_name: e.target.value })} className={field} />
+              <label htmlFor="home-pet_name" className="mb-1.5 block text-xs uppercase tracking-[0.15em] text-muted-foreground">Pet's name</label>
+              <input id="home-pet_name" maxLength={100} value={form.pet_name} onChange={(e) => setForm({ ...form, pet_name: e.target.value })} className={field} />
             </div>
           </div>
           <div>
-            <label className="mb-1.5 block text-xs uppercase tracking-[0.15em] text-muted-foreground">A note</label>
-            <textarea rows={4} maxLength={2000} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className={field} />
+            <label htmlFor="home-message" className="mb-1.5 block text-xs uppercase tracking-[0.15em] text-muted-foreground">A note</label>
+            <textarea id="home-message" rows={4} maxLength={2000} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className={field} />
           </div>
-          <button
+          <Button
             type="submit"
             disabled={busy}
             className="w-full rounded-full bg-primary py-3 text-sm font-medium text-primary-foreground hover:opacity-90 disabled:opacity-60"
           >
             {busy ? "Sending…" : "Book enquiry"}
-          </button>
+          </Button>
         </form>
       </div>
     </section>

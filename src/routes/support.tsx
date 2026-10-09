@@ -2,8 +2,11 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Mail } from "lucide-react";
 
 export const Route = createFileRoute("/support")({
+  staticData: { sitemap: true },
   head: () => ({
+    links: [{ rel: "canonical", href: "https://petpalsgg.lovable.app/support" }],
     meta: [
+      { property: "og:url", content: "https://petpalsgg.lovable.app/support" },
       { title: "Support — PetPals" },
       { name: "description", content: "PetPals support contact." },
       { property: "og:title", content: "Support — PetPals" },

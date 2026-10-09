@@ -1,8 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/privacy")({
+  staticData: { sitemap: true },
   head: () => ({
+    links: [{ rel: "canonical", href: "https://petpalsgg.lovable.app/privacy" }],
     meta: [
+      { property: "og:url", content: "https://petpalsgg.lovable.app/privacy" },
       { title: "Privacy Policy — PetPals" },
       { name: "description", content: "PetPals privacy policy — how we handle your data when you book an enquiry." },
       { property: "og:title", content: "Privacy Policy — PetPals" },
